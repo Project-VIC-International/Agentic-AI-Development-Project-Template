@@ -6,6 +6,16 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 Use this section to record user-facing changes as the project evolves. Move entries into a versioned section when a release is tagged.
 
+### Added
+
+- NCCC-focused `START-HERE-NCCC.md` entry point and `prompts/START-CURSOR-HERE.md` bootstrap prompt.
+- Course integration guide, beginner `student-mode` Cursor rule, student lab issue template, and NCCC mini-project example.
+- Optional GitHub Codespaces/devcontainer configuration for conference and classroom setup.
+
+### Changed
+
+- Elevated the student golden path in `README.md`, `QUICKSTART.md`, and agent guidance so the template is clearly the primary hands-on workspace.
+
 ## [v0.1.0] - 2026-04-25
 
 ### Added

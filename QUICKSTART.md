@@ -2,17 +2,36 @@
 
 Use this guide when you have just cloned this template into Cursor and want to begin a new Project VIC style agentic AI development project.
 
+## Student Path: Do These 7 Things
+
+1. Create a private repository from this template.
+2. Open the private repository in Cursor.
+3. Read `START-HERE-NCCC.md`.
+4. Paste the prompt in `prompts/START-CURSOR-HERE.md`.
+5. Complete `intake/problem-intake.md`.
+6. Ask Cursor to review the intake and draft a milestone plan.
+7. Build only the first small milestone using synthetic data.
+
 ## 0. Read the Safety Rules
 
 Before creating issues, writing specs, or running setup scripts, read `SECURITY.md` and the "Important Safety Rules" section in `README.md`.
 
 Use synthetic data only while building and testing. Do not put real case data, CSAM, suspected CSAM, credentials, agency-private information, or sensitive operational details into prompts, repositories, issues, logs, screenshots, or fixtures.
 
-## 1. Create Your Own GitHub Repository
+## 1. Create Your Own GitHub Repository From This Template
 
 Create a new private GitHub repository under your own account or organization. Keep it private unless you have explicit approval to make the work public.
 
-You can create the repository in the GitHub website, or you can install and use GitHub CLI as described in `docs/github-setup.md`.
+The recommended lab path is to create a new repository directly from this template. You can do that in the GitHub website, or with GitHub CLI as described in `docs/github-setup.md`:
+
+```bash
+gh repo create my-agentic-ai-project \
+  --template Project-VIC-International/Agentic-AI-Development-Project-Template \
+  --private \
+  --clone
+```
+
+If you already have a local copy of this template and want to connect it to a new private repository instead, you can still do that by creating the repository in GitHub and then adding the remote:
 
 After creating the repository, connect this local template to it:
 
@@ -39,6 +58,8 @@ For macOS or Windows 11, see:
 
 The setup scripts should ask before installing tools. When there is a choice, prefer the lowest-risk local option, such as a Python virtual environment inside the project. See `docs/tooling-setup.md` for more detail.
 
+If local setup is failing or time is limited, use GitHub Codespaces from your private template-based repository, or pair with another student who has a working setup.
+
 ## 3. Complete the Intake Form
 
 Copy or edit `intake/problem-intake.md`. Use `docs/synthetic-test-data.md` and `docs/case-uco-cac-guidance.md` while answering. Describe:
@@ -51,7 +72,9 @@ Copy or edit `intake/problem-intake.md`. Use `docs/synthetic-test-data.md` and `
 
 ## 4. Ask Cursor to Plan
 
-Use the prompts in `prompts/cursor-prompts.md`. The usual path is:
+Before asking Cursor to build anything, paste the prompt in `prompts/START-CURSOR-HERE.md`.
+
+Then use the prompts in `prompts/cursor-prompts.md`. The usual path is:
 
 1. Ask Cursor to review the intake form.
 2. Ask Cursor to create a milestone plan from `v0.1.0` through `v1.0.0`.

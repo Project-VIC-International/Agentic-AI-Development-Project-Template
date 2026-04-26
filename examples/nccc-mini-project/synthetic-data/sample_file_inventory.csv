@@ -1,0 +1,4 @@
+item_id,file_name,file_path,file_type,review_status,hash_recorded,hash_algorithm
+SYNTH-ITEM-001,briefing-note.txt,/training/input/briefing-note.txt,text,pending,no,
+SYNTH-ITEM-002,device-summary.csv,/training/input/device-summary.csv,csv,reviewed,yes,SHA-256
+SYNTH-ITEM-003,photo-log.txt,/training/input/photo-log.txt,text,follow_up,no,

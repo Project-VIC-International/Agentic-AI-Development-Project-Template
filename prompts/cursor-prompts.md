@@ -2,6 +2,8 @@
 
 These prompts are examples. Edit them to match your project.
 
+Start with `prompts/START-CURSOR-HERE.md` before using the prompts below.
+
 ## Understand the Template
 
 ```text

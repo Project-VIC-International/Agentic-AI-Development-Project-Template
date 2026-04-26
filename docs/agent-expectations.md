@@ -10,6 +10,7 @@ Read .cursor/rules/ and explain the development expectations in plain language. 
 
 ## Key Rule Areas
 
+- Beginner workflow and safer pacing: `.cursor/rules/student-mode.mdc`.
 - Spec-kit first: `.cursor/rules/speckit-workflow.mdc`.
 - Four data interfaces: `.cursor/rules/four-surface-review.mdc`.
 - CASE/UCO/CAC alignment: `.cursor/rules/ontology-alignment.mdc`.
@@ -22,6 +23,8 @@ Read .cursor/rules/ and explain the development expectations in plain language. 
 
 ## How This Connects
 
+- `START-HERE-NCCC.md` gives students the shortest safe path through the template.
+- `prompts/START-CURSOR-HERE.md` gives the agent a predictable first instruction.
 - `intake/problem-intake.md` gives the agent the project context.
 - `planning/milestone-plan-template.md` turns the intake into a reviewed roadmap.
 - `.github/ISSUE_TEMPLATE/project_issue.md` turns roadmap items into issue-level spec-kit inputs.

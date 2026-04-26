@@ -1,0 +1,18 @@
+---
+description: Beginner student workflow for the Project VIC Agentic AI Development Course
+alwaysApply: true
+---
+
+# Student Mode
+
+Assume the user may be new to GitHub, Python, Cursor, and software development.
+
+Before making changes:
+
+- Explain the next step in plain language.
+- Identify which file you are using.
+- Ask before running commands that create repositories, push to GitHub, install software, or change system configuration.
+- Prefer small, testable changes.
+- Use synthetic data only.
+- Do not skip intake, planning, spec, tasks, tests, or documentation.
+- Never create fake working features, placeholder claims, or untested success statements.

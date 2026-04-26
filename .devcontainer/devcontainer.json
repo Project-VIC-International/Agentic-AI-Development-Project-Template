@@ -1,0 +1,17 @@
+{
+  "name": "Project VIC Agentic AI Development",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "python --version && git --version && gh --version",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "GitHub.vscode-github-actions"
+      ]
+    }
+  }
+}
