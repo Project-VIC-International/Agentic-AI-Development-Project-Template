@@ -1,0 +1,125 @@
+// This file is JSONC, not strict JSON.
+// JSONC lets us add comments for teaching. Remove comments before passing the
+// data to a strict JSON parser, JSON-LD processor, or CASE/UCO validator.
+//
+// This is a small synthetic example showing the shape of a CASE/UCO/CAC-style
+// JSON-LD graph. It is intentionally fictional and safe for training.
+// Before using this in a real project, ask the agent to validate and refine the
+// class/property choices with CASE/UCO SDK v1.11.0+ and its MCP server.
+{
+  // @context maps short prefixes to ontology namespaces.
+  // This lets the graph use readable names like case-investigation:Investigation
+  // instead of repeating full URLs for every class and property.
+  "@context": {
+    "case-investigation": "https://ontology.caseontology.org/case/investigation/",
+    "uco-action": "https://ontology.unifiedcyberontology.org/uco/action/",
+    "uco-core": "https://ontology.unifiedcyberontology.org/uco/core/",
+    "uco-observable": "https://ontology.unifiedcyberontology.org/uco/observable/",
+    "uco-types": "https://ontology.unifiedcyberontology.org/uco/types/",
+    "cac-core": "https://ontology.cacontology.projectvic.org/core/",
+    "cac-forensics": "https://ontology.cacontology.projectvic.org/forensics/",
+    "example": "https://example.org/project-vic-template/synthetic/"
+  },
+
+  // @graph contains the things and relationships we are describing.
+  // Each node gets an @id so other nodes can reference it.
+  "@graph": [
+    {
+      // This node is the investigation or case container.
+      // It is synthetic and does not represent a real investigation.
+      "@id": "urn:uuid:00000000-0000-4000-8000-000000000001",
+      "@type": "case-investigation:Investigation",
+      "uco-core:name": "SYNTH-CASE-001",
+      "uco-core:description": "Synthetic training investigation for testing intake, provenance, and export workflows.",
+
+      // CAC concepts can help describe why this investigation exists in the
+      // crimes-against-children domain without exposing real mission data.
+      "example:domainConcept": {
+        "@id": "cac-core:InvestigativeAction"
+      }
+    },
+
+    {
+      // This node represents a harmless synthetic file-like object.
+      // In a real application, this could be a report, image, archive, log,
+      // extracted artifact, or other observable item.
+      "@id": "urn:uuid:00000000-0000-4000-8000-000000000002",
+      "@type": "uco-observable:File",
+
+      // UCO models many observable details through facets.
+      // This simplified example shows a file name and hash-like value.
+      "uco-observable:hasFacet": [
+        {
+          "@type": "uco-observable:FileFacet",
+          "uco-observable:fileName": "synthetic-intake-note.txt",
+          "uco-observable:extension": "txt"
+        },
+        {
+          "@type": "uco-observable:ContentDataFacet",
+          "uco-observable:hash": [
+            {
+              "@type": "uco-types:Hash",
+              "uco-types:hashMethod": "SHA256",
+
+              // This value is obviously synthetic. Do not use real evidence
+              // hashes in examples, prompts, issues, or test fixtures.
+              "uco-types:hashValue": "0000000000000000000000000000000000000000000000000000000000000000"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      // This node represents the forensic acquisition or intake action.
+      // Actions are important because they explain provenance: who or what did
+      // something, when it happened, what went in, and what came out.
+      "@id": "urn:uuid:00000000-0000-4000-8000-000000000003",
+      "@type": "cac-forensics:ForensicAcquisitionAction",
+      "uco-core:name": "Synthetic file intake",
+      "uco-core:description": "A fictional acquisition action used to test provenance handling.",
+
+      // The action is associated with the synthetic investigation.
+      "case-investigation:investigation": {
+        "@id": "urn:uuid:00000000-0000-4000-8000-000000000001"
+      },
+
+      // The action produced the synthetic file object above.
+      "uco-action:result": {
+        "@id": "urn:uuid:00000000-0000-4000-8000-000000000002"
+      },
+
+      // Use fictional operators and organizations in examples.
+      "example:performedBy": "Synthetic Examiner",
+      "example:performedAt": "2026-01-01T12:00:00Z"
+    },
+
+    {
+      // This node represents a verification action over the synthetic file.
+      // It demonstrates a second action linked to the same observable.
+      "@id": "urn:uuid:00000000-0000-4000-8000-000000000004",
+      "@type": "cac-forensics:EvidenceVerificationAction",
+      "uco-core:name": "Synthetic hash verification",
+      "uco-core:description": "A fictional verification action confirming the synthetic file hash value used for testing.",
+      "uco-action:object": {
+        "@id": "urn:uuid:00000000-0000-4000-8000-000000000002"
+      },
+      "example:verificationOutcome": "passed"
+    },
+
+    {
+      // This node shows a simple relationship between the investigation and
+      // the synthetic file. Relationships help graph tools answer questions
+      // such as "what artifacts belong to this investigation?"
+      "@id": "urn:uuid:00000000-0000-4000-8000-000000000005",
+      "@type": "uco-core:Relationship",
+      "uco-core:source": {
+        "@id": "urn:uuid:00000000-0000-4000-8000-000000000001"
+      },
+      "uco-core:target": {
+        "@id": "urn:uuid:00000000-0000-4000-8000-000000000002"
+      },
+      "uco-core:kindOfRelationship": "contains"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+---
+description: Review every change across the four data interfaces
+alwaysApply: true
+---
+
+# Four-Interface Impact Review
+
+Every mission tool should be designed with four data interfaces from the beginning. Agents can help implement and test these interfaces quickly, so do not begin with an overly simple architecture that will be hard to extend later.
+
+## The Four Interfaces
+
+| Interface | Primary Benefit | Typical Consumers |
+|---|---|---|
+| Human UI | Makes the workflow understandable and usable under mission pressure | Investigators, examiners, analysts, supervisors, prosecutors |
+| Command-line / Power-user | Enables repeatable batch work, automation, scripting, and advanced troubleshooting | Digital forensic examiners, analysts, lab automation, agent-driven local workflows |
+| Application / API | Lets other software and agents call the tool reliably | Cursor agents, MCP servers, internal services, partner applications, future integrations |
+| MCP Server | Lets agents natively engage with the application through a structured set of tools |
+
+These are the "four doors" into and out of the tool. A project may implement them incrementally, but the architecture should account for them from the start.
+
+| Interoperable Export (a fifth interface)| Lets findings, evidence-derived metadata, reports, and analysis move across tools | Project VIC tools, partner agencies, prosecutors, forensic platforms, graph/query systems |
+
+## Review Checklist
+
+For every meaningful change, answer:
+
+- Does this need to be visible in the human UI?
+- Does this need a CLI command, script option, or power-user workflow?
+- Does this need an API, MCP tool, or other application interface?
+- Does this need to appear in CASE/UCO/CAC-aligned exports, reports, bundles, or machine-readable output?
+- Are names, concepts, and relationships consistent across all affected interfaces?
+- Can each affected interface be tested with synthetic data?
+- Are security controls enforced below the interface layer so one door cannot bypass another?
+
+## Architecture Guidance
+
+- Put authorization, validation, audit logging, ontology mapping, and core business logic in shared service layers where practical.
+- Treat the human UI, CLI, API/MCP, and export surface as consumers of shared behavior, not separate implementations of the same rules.
+- If a feature deliberately affects only one interface, document why the others are unaffected.
+- If an interface is deferred, create a tracked issue with clear acceptance criteria instead of silently ignoring it.
+
+## Mission Design Principle
+
+Tools are built for people and agencies doing hard, high-consequence work. Operator-facing language should use investigator-familiar terminology and avoid unnecessary engineering jargon. Machine-facing outputs should be stable, documented, and ontology-aligned.
+

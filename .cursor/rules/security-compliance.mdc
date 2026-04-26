@@ -1,0 +1,55 @@
+---
+description: Security and compliance defaults for mission tools
+alwaysApply: true
+---
+
+# Security Compliance
+
+Mission tools in the crimes-against-children domain may process criminal justice information, sensitive investigative information, victim-related information, evidence-derived data, or agency-private data. Treat security as mandatory from the start.
+
+## Default Frameworks
+
+- Default to NIST SP 800-53 and FBI CJIS Security Policy controls unless the user explicitly declares another national or agency framework.
+- Ask the user what country, jurisdiction, agency, legal, policy, and deployment requirements apply before planning production controls.
+- If the user declares another framework, map controls to that framework and document the change.
+
+## Sensitive Data Rules
+
+Never add the following to prompts, repositories, issues, logs, screenshots, fixtures, sample files, generated docs, or test data:
+
+- CSAM or suspected CSAM.
+- Real case data.
+- Victim, witness, suspect, investigator, or agency-sensitive identifiers.
+- Credentials, API keys, tokens, passwords, private certificates, or signing keys.
+- Sensitive investigative techniques, operational details, leads, or internal system details.
+
+Use synthetic data that is generically representative of structure, workflow, and relationships without exposing real mission content.
+
+## Required Control Areas
+
+Every feature must consider:
+
+- Access control and least privilege.
+- Identification, authentication, session handling, and account lifecycle.
+- Audit logging and attribution.
+- Input validation at every external boundary.
+- Error handling that avoids leaking sensitive details.
+- Encryption in transit and at rest where production mission data is involved.
+- Secrets management and redaction.
+- Dependency, license, and vulnerability review.
+- Export integrity, hashes, signatures, and provenance where applicable.
+- Operator wellbeing when users may be exposed to harmful content.
+
+## Four-Interface Security
+
+Security controls must apply consistently across the human UI, CLI/power-user interface, API/MCP interface, and export interface. A control enforced only in the UI but bypassable through the API or CLI is a vulnerability.
+
+## Implementation Requirements
+
+- Build controls into the feature, not as a later cleanup.
+- Use shared authorization, validation, audit, and export integrity mechanisms where practical.
+- Never hardcode secrets.
+- Commit `.env.example` or `.env.template`, not real `.env` files.
+- Redact secrets and sensitive paths in logs and errors.
+- Fail closed when security validation, ontology validation, or export integrity checks fail.
+

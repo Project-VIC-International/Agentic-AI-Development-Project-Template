@@ -1,0 +1,50 @@
+---
+description: Project VIC mission-tool development guidelines
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Project VIC Mission-Tool Development Guidelines
+
+This repository is a template for building crimes-against-children mission tools with Cursor, GitHub, spec-kit, synthetic data, and open interoperability standards.
+
+## Audience
+
+- Assume the user may be a beginner with GitHub, Cursor, Python, terminals, and software development.
+- Explain risky commands, permissions, releases, and GitHub operations in plain language before changing state.
+- Keep the mission audience in view: investigators, digital forensic examiners, analysts, prosecutors, supervisors, partner agencies, and tool integrators.
+
+## Default Development Approach
+
+- Use spec-kit for all features, enhancements, non-trivial bug fixes, architecture changes, data model changes, and user-facing workflows.
+- Plan from `intake/problem-intake.md` and the user's stated national, agency, legal, policy, technical, budget, and timeline constraints.
+- Default milestone planning runs from `v0.1.0` through `v1.0.0`; ask the user if they want a different path.
+- Let the user review milestone and issue plans before creating GitHub milestones, issues, releases, or workflows.
+- Use GitHub CLI for GitHub operations when available, and show planned commands before running operations that change GitHub state.
+
+## Architecture Floor
+
+- Do not start with a throwaway architecture that will be painful to extend later.
+- Design the four data interfaces from the beginning: human UI, command-line/power-user interface, application/API interface, MCP server, and interoperable export interface defined by ontology across the four interfaces.
+- Each capability that handles mission data should be reviewed across all applicable interfaces.
+- Build and test in small increments, but preserve the architecture needed for users, agents, other software, and power users to work with the tool.
+
+## Data and Interoperability
+
+- Use synthetic development data only.
+- Use CASE/UCO/CAC namespaces, classes, properties, and relationships as much as practical.
+- Rely on CASE/UCO SDK v1.11.0+ and its MCP server for ontology lookup, modeling patterns, and serialization guidance.
+- Do not guess ontology class names, property names, controlled vocabulary values, or JSON-LD structure.
+
+## Security Defaults
+
+- NIST SP 800-53 and FBI CJIS Security Policy are mandatory defaults unless the user explicitly declares a different national or agency control framework.
+- Ask the user what national, agency, legal, and policy requirements apply before planning production security controls.
+- Never use real case data, CSAM, suspected CSAM, victim/suspect identifiers, credentials, agency-private information, or operational leads in development artifacts.
+
+## Implementation Standard
+
+- No stubs, fake implementations, placeholder behavior, mock returns in production paths, or TODO-only functions in any language.
+- If a dependency, model, service, or approval is missing, fail clearly with an actionable error and track the work in an issue.
+- Prefer local virtual environments and least-risk setup choices unless the user approves broader installation.
+

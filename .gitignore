@@ -1,0 +1,32 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local tools downloaded by setup scripts
+tools/
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.*
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Build and logs
+build/
+dist/
+*.egg-info/
+*.log
+

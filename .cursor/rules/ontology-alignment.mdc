@@ -1,0 +1,46 @@
+---
+description: CASE/UCO/CAC ontology alignment through the SDK and MCP server
+alwaysApply: true
+---
+
+# CASE/UCO/CAC Ontology Alignment
+
+Project VIC mission tools should reuse shared ontology concepts wherever practical so tools, agencies, and downstream systems can interoperate without expensive normalization.
+
+## Required Default
+
+- Use CASE/UCO SDK v1.11.0 or newer as the authoritative modeling and serialization reference. Get the SDK at https://github.com/vulnmaster/CASE-UCO-SDK.
+- Use the SDK's MCP server for class lookup, property lookup, recipes, controlled vocabularies, and validation guidance.
+- Do not guess at class names, property names, relationships, namespaces, controlled vocabularies, or JSON-LD structure.
+- Use CASE, UCO, and CAC namespaces, classes, properties, and relationships even if the application stores data in SQLite, PostgreSQL, files, JSON, CSV, search indexes, object stores, or graph databases.
+
+## When to Apply Strong Ontology Modeling
+
+Use stronger ontology-first design when the project needs:
+
+- Graph path finding.
+- Graph inferencing.
+- Subclass reasoning.
+- Complex cross-source questions.
+- Interoperable exports.
+- Chain-of-custody, provenance, or defensibility.
+- Multi-agency or cross-tool workflows.
+
+## Practical Workflow
+
+When modeling a new concept:
+
+1. Search the SDK/MCP server for applicable CASE/UCO/CAC classes.
+2. Inspect candidate class details, required properties, facets, and controlled vocabularies.
+3. Choose the most specific correct class rather than a generic parent.
+4. Map application fields to ontology properties.
+5. Use SDK builders or recipes where available.
+6. Validate generated output when producing JSON-LD or export bundles.
+7. If no concept exists, propose an upstream CAC contribution or a clearly documented extension rather than inventing ad-hoc local terminology.
+
+## Export Expectations
+
+- Mission data exports should be machine-readable and ontology-aligned when practical.
+- Invalid ontology output should fail closed rather than being delivered as if valid.
+- Human-readable reports may use Project VIC brand styling, but the underlying structured data should remain content-focused and interoperable.
+

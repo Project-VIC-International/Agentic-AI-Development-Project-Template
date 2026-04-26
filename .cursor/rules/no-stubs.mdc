@@ -1,0 +1,31 @@
+---
+description: No stubs, placeholders, fake implementations, or mock production paths
+alwaysApply: true
+---
+
+# No Stubs
+
+Never create stub implementations, placeholder functions, fake responses, mock returns in production paths, TODO-only code, or "will implement later" behavior in any language.
+
+## Binding Rules
+
+- If a function, route, command, tool, class, workflow, exporter, serializer, migration, or service is defined, it must perform its documented purpose.
+- If a dependency, database, model, MCP server, credential, configuration value, network service, or approval is missing, fail with a clear actionable error.
+- Do not return synthetic success from a production path.
+- Do not invent fake IDs, fake hashes, fake ontology terms, fake validation results, fake security checks, or fake performance numbers.
+- Do not mark a task complete until the implementation is real and testable.
+- Do not leave `TODO`, `pass`, `NotImplemented`, `return {}`, `return None`, empty handlers, or commented-out logic as the shipped behavior.
+
+## Acceptable Temporary Boundaries
+
+When the user explicitly chooses to defer work:
+
+- Create a tracked issue.
+- Make the runtime behavior fail closed with an actionable message.
+- Document what is missing and how to complete it.
+- Do not expose it as a working capability.
+
+## Testing
+
+Use synthetic data for testing, but test real behavior. Synthetic data is safe representative input, not permission to fake the implementation.
+

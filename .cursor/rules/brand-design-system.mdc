@@ -1,0 +1,59 @@
+---
+description: Project VIC brand and design system compliance for visible surfaces
+alwaysApply: true
+---
+
+# Project VIC Brand and Design System
+
+Project VIC mission tools may use the Project VIC International brand and design system. Visible surfaces should align with that system unless the user explicitly chooses a different brand or agency design system.
+
+## Source of Truth
+
+Use the Project VIC International brand and design system as the default source for:
+
+- Color.
+- Typography.
+- Spacing.
+- Radii.
+- Shadows.
+- Motion.
+- Iconography.
+- Components.
+- Voice, tone, terminology, and forbidden phrases.
+
+When the public repository is available, prefer a pinned tagged release rather than an unpinned `main` dependency.
+
+## Visible Surfaces
+
+Brand and design guidance applies to:
+
+- Human UI.
+- Human-readable API errors and documentation.
+- CLI banners, help text, and progress messages.
+- Reports, cover sheets, screenshots, diagrams, documentation, and release notes.
+
+Machine-readable CASE/UCO/CAC payloads should stay content-focused and brand-neutral.
+
+## Implementation Rules
+
+- Use semantic tokens rather than hardcoded colors, fonts, spacing, or radii.
+- Do not use real or recognizable case content in screenshots, mockups, demos, generated images, or docs.
+- Use operator-appropriate language for investigator and examiner workflows.
+- Avoid unnecessary ML or engineering jargon in operator-facing copy.
+- Use canonical Project VIC naming and terminology.
+- Preserve accessibility, including WCAG contrast expectations for UI and reports.
+
+## Speckit Integration
+
+Specs for visible changes should identify:
+
+- Which visible surfaces are affected.
+- Which tokens, components, and terminology rules apply.
+- How accessibility will be checked.
+- What screenshots, docs, reports, or release notes need updates.
+
+## Create a Brand and Design Program for your Organization
+
+- If you are only building one application, you can just create the brand and design system for that app.
+- If you intend to create more than one application or use agentic AI tools like Cursor to update and maintain existing applications, it is most helpful to create a new repository and work with the agent to create an organization-wide brand and design system. Reach out to Project VIC International at projectvic.org if you need assistance in doing this. An organizational wide approach is very helpful in maintaining standards.
+

@@ -1,0 +1,50 @@
+---
+description: Cross-platform compatibility for Linux, Windows 11, and macOS
+alwaysApply: true
+---
+
+# Cross-Platform Compatibility
+
+Project VIC mission tools should account for the operating systems commonly used by investigators, examiners, analysts, labs, and agencies.
+
+## Default Platforms
+
+Plan for:
+
+- Linux, especially Ubuntu LTS.
+- Windows 11, including PowerShell, WSL2, and Docker Desktop where applicable.
+- macOS, including Apple Silicon and Docker Desktop where applicable.
+- Mobile operating systems IOS and Android.
+
+If the project intentionally supports fewer platforms, document the decision and user impact.
+
+## Path Handling
+
+- Use platform-aware path libraries such as Python `pathlib.Path`.
+- Do not hardcode `/home`, `~/`, `C:\Users`, `/Users`, path separators, or temporary directories.
+- Use environment variables and configuration for user-controlled paths.
+- Normalize and validate paths before using them.
+- Protect against directory traversal and archive extraction attacks.
+- Open binary evidence-like files in binary mode.
+
+## Tooling and Scripts
+
+- Provide OS-specific setup guidance when needed.
+- Prefer local virtual environments for Python tooling.
+- Avoid shell-specific assumptions unless the script is explicitly for that shell.
+- Use argument lists for subprocess calls; do not compose shell strings with user input.
+- Probe external binary availability and return actionable errors.
+
+## Containers and Acceleration
+
+- CPU-only operation should be available unless the project explicitly requires specialized hardware.
+- GPU acceleration should be optional and detected at runtime.
+- Document GPU support clearly by platform.
+- Avoid privileged containers and broad device passthrough.
+
+## Testing
+
+- Test platform-specific code paths or document why they are not supported.
+- Keep line endings, path lengths, file permissions, and case sensitivity in mind.
+- Use synthetic data for all platform tests.
+

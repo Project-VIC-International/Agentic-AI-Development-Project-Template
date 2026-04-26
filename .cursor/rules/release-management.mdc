@@ -1,0 +1,55 @@
+---
+description: Release, changelog, README, milestone, and GitHub issue requirements
+alwaysApply: true
+---
+
+# Release Management
+
+Every release should have a clear user-facing record of what changed, how to use it, how it was tested, and what risks remain.
+
+## Versioning
+
+- Use semantic versioning unless the user chooses another scheme.
+- Default milestone planning runs from `v0.1.0` through `v1.0.0`.
+- `v1.0.0` is the first major release that satisfies the user's definition of success.
+- The user may review and change the milestone path before GitHub milestones or issues are created.
+
+## Changelog
+
+Maintain `CHANGELOG.md` once project development begins.
+
+Every release entry should include:
+
+- Version number and date.
+- User-facing changes.
+- Security-relevant changes.
+- Interoperability or CASE/UCO/CAC export changes.
+- Breaking changes and migration instructions.
+- Performance baseline changes when autoresearch ratchets a metric.
+- Related GitHub issues or pull requests where applicable.
+
+## README and Docs
+
+Update `README.md` and relevant docs when setup, usage, features, interfaces, security posture, ontology mapping, configuration, deployment, or limitations change.
+
+Do not bury critical usage instructions only in issue comments or chat transcripts.
+
+## GitHub Actions
+
+- Do not create a default workflow until the project requirements are understood.
+- Keep workflows minimal and appropriate for free private GitHub repositories.
+- Avoid unnecessary scheduled jobs, large artifacts, long-running jobs, paid add-ons, excessive caching, and Git LFS unless approved.
+- Ask the user before adding workflows that could consume significant Actions minutes or storage.
+
+## Release Checklist
+
+Before tagging a release, confirm:
+
+- Specs, plans, tasks, code, tests, docs, and changelog agree.
+- A synthetic-data test pass is complete.
+- Security controls are documented and tested where applicable.
+- Ontology-aligned exports validate where applicable.
+- All four data interfaces are implemented, intentionally deferred with issues, or documented as not applicable.
+- No stubs or fake implementations remain.
+- Known limitations are documented.
+

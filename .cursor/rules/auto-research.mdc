@@ -1,0 +1,54 @@
+---
+description: Karpathy-style autoresearch for measured performance improvement
+alwaysApply: true
+---
+
+# Auto-Research: Experiment-Driven Improvement
+
+Use Karpathy-style autoresearch liberally for measurable performance items after a baseline exists. The agent should identify opportunities and ask the user whether to run autoresearch at that moment. Agents must present autoresearch candidates within the operational domain of the application being developed so the user understands what the autoresearch goals are.
+
+## When to Consider Auto-Research
+
+Prompt the user about autoresearch when work involves measurable:
+
+- Runtime performance.
+- Throughput.
+- Latency.
+- Memory use.
+- Accuracy, recall, precision, or error rates.
+- Search quality.
+- Export or validation speed.
+- Batch processing cost.
+- UI render time.
+- Test suite duration.
+- File size, storage use, or network transfer.
+
+## Required Loop
+
+```text
+READ baseline and spec threshold
+HYPOTHESIZE one concrete testable change
+IMPLEMENT in isolation
+MEASURE against the same workload
+EVALUATE keep or discard
+RATCHET the baseline if accepted
+DOCUMENT the result
+```
+
+## Rules
+
+- Always measure; do not guess.
+- Change one variable at a time.
+- Use isolated branches, worktrees, or best-of-n runners for experiments.
+- Record workload, hardware, software versions, commands, before/after metrics, and decision.
+- Keep only verified improvements.
+- If an improvement is accepted, update the spec threshold, docs, changelog, and tests as appropriate.
+- Stop after repeated non-improving experiments or when the bottleneck is outside the project scope.
+
+## When Not to Use
+
+- Before correctness is established.
+- For urgent correctness bugs with obvious fixes.
+- For safety-critical operator wellbeing controls where review matters more than optimization.
+- When the user declines or the environment cannot measure the metric responsibly.
+

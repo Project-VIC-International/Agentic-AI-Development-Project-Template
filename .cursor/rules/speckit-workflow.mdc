@@ -1,0 +1,50 @@
+---
+description: Mandatory spec-kit pipeline for project development
+alwaysApply: true
+---
+
+# Spec-Kit Driven Development
+
+All features, enhancements, architecture changes, data model changes, user-facing workflows, and non-trivial bug fixes MUST follow the spec-kit pipeline. Do not jump directly to implementation unless the change is clearly trivial.
+
+## Required Pipeline
+
+1. `specify` - Write the spec first. Define mission outcome, requirements, acceptance criteria, constraints, security controls, ontology alignment, performance thresholds, and success metrics.
+2. `plan` - Design the implementation approach. Research unknowns, define data models, establish interfaces, and document tradeoffs.
+3. `tasks` - Break the plan into dependency-ordered, actionable tasks with file paths, user stories, and test expectations.
+4. `implement` - Execute tasks in order, marking each complete only when implemented and tested.
+5. `analyze` - Run cross-artifact consistency checks so spec, plan, tasks, code, docs, and tests agree.
+
+Use `clarify` when requirements are ambiguous. Use `checklist` when the feature has security, compliance, UX, ontology, release, or cross-platform implications.
+
+## When Spec-Kit Applies
+
+- New modules, views, CLIs, APIs, MCP tools, exports, reports, data models, workflows, or integrations.
+- Refactors that change public interfaces, data models, schemas, or serialized output.
+- Bug fixes that require architectural or behavioral changes.
+- Security, compliance, interoperability, release, or deployment changes.
+- Performance improvements once a baseline exists.
+
+## When Spec-Kit May Be Skipped
+
+- Typo corrections.
+- Documentation-only changes that do not alter guidance.
+- Single-line fixes with obvious cause and no architectural impact.
+- Dependency bumps with no API or behavior change.
+
+## Required Plan Gates
+
+Every non-trivial plan must address:
+
+- Four-interface impact: human UI, command-line/power-user, application/API, interoperable export.
+- CASE/UCO/CAC alignment using CASE/UCO SDK v1.11.0+ and its MCP server.
+- Security controls, defaulting to NIST 800-53 and CJIS unless the user declares another framework.
+- Synthetic data and sensitive-data boundaries.
+- Cross-platform requirements for Linux, Windows 11, and macOS where applicable.
+- No-stubs implementation plan.
+- Release, changelog, README, issue, and milestone impact.
+- Brand and design system impact for visible surfaces.
+- Measurable performance baselines and autoresearch opportunities.
+
+A plan with an unchecked gate is not approved unless the user explicitly accepts the risk and the reason is documented.
+
