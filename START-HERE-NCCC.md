@@ -15,7 +15,8 @@ Before asking Cursor to build anything:
 9. Ask Cursor to ensure that spec-kit is installed and is setup to use the full spec-kit project scaffolding starting with creation of the project's constitution.
 10. Ask Cursor to create a milestone plan with issues in your new Github repo.
 11. Ask Cursor to push code and releases for each version to Github for safekeeping.
-12. Ask Cursor what needs to be done to start the implementation. It should advance to start working to create its first spec with you.
-13. Ask Cursor to make a glossary.md in the "docs" directory to store unique concepts and definitions related to your application.
+12. Ask Cursor to make a glossary.md in the "docs" directory to store unique concepts and definitions related to your application.
+13. Ask Cursor to update your README.md and CHANGELOG.md for every minor and major release, and to use the CHANGELOG release notes to write the release notes in Github.
+14. Ask Cursor what needs to be done to start the implementation. It should advance to start working to create its first spec with you.
 
 Do not paste real case data into Cursor, GitHub, issues, logs, screenshots, test files, or sample data. For this course, all development must use synthetic data.
