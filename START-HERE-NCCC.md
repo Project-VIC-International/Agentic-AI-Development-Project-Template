@@ -9,7 +9,7 @@ Before asking Cursor to build anything:
 3. Complete `intake/problem-intake.md`.
 4. Ask Cursor to summarize `.cursor/rules/`.
 5. Ask Cursor to review `prompts/START-CURSOR-HERE.md`.
-6. Ask Cursor to review your intake form.
+6. Ask Cursor to review your intake form. The Cursor agent may ask lots of questions. Just talk to it in your natural language. If you don't have any answer just tell the agent that you don't know and that you want its help in figuring it out.
 7. Create your Github repository with the name of your application. Give the ".git" address to your agent and tell it that it needs to use that new repo going forward. Cursor will keep your local repository and your new Github repository synced.
 8. Review the `scripts/` folder to find the operating system you are using. "Right click" the setup-* file name and add it to the cursor chat. Ask Cursor if it has all of the software it needs for your project and tell it to install software dependencies into a virtual container like a ".venv" as that protects your computer from software conflicts. Let Cursor execute the script if it needs to - it might need your help with a sudo or admin password. It may add additional software dependencies for installation.
 9. Ask Cursor to ensure that spec-kit is installed and is setup to use the full spec-kit project scaffolding starting with creation of the project's constitution.
