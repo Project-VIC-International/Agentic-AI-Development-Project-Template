@@ -1,0 +1,172 @@
+---
+description: Semantic versioning, release-scoped Spec Kit planning, changelog, README, GitHub issues, milestones, labels, GitHub Actions, and release documentation
+globs: ["CHANGELOG.md", "README.md", "specs/**", "planning/**", "**/.github/workflows/**", "**/package.json", "**/pyproject.toml", "**/Cargo.toml", "**/*release*", "**/*version*"]
+alwaysApply: false
+---
+<!-- Generated from policies/versioning-release-management.md by scripts/sync_agent_rules.py. Edit the source policy, then re-run the script. -->
+
+# Versioning and Release Management
+
+Projects use Semantic Versioning and disciplined release management so users, contributors, investigators, agencies, validators, and AI agents can understand what changed, what is safe to use, and what remains incomplete. A finding produced by a tool is only as defensible as the release record for the version that produced it.
+
+A release is not complete until version metadata, changelog entries, documentation, tests, GitHub Issues, milestones, release notes, and release artifacts are aligned.
+
+## Semantic Versioning
+
+Follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html): `MAJOR.MINOR.PATCH`, unless the user explicitly chooses another scheme.
+
+- Increment `MAJOR` for incompatible API, schema, artifact, CLI, MCP, data model, ontology mapping, deployment, or workflow changes.
+- Increment `MINOR` for backward-compatible functionality.
+- Increment `PATCH` for backward-compatible fixes, documentation corrections, test improvements, compatible security patches, and maintenance changes.
+- Use pre-release identifiers for demos, pilots, alpha builds, beta builds, and release candidates, such as `1.0.0-alpha.1`, `1.0.0-beta.1`, or `1.0.0-rc.1`.
+- Do not describe alpha, beta, pilot, or release-candidate builds as production-ready.
+
+## Maturity Convention
+
+Use this planning convention alongside SemVer. It never overrides SemVer: if a breaking change occurs, increment the major version.
+
+| Version | Planning meaning |
+|---------|------------------|
+| `0.x.y` | **Pre-MVP:** iterative, testable releases (skeleton, workflows, demos, hardening). The number of minors is project-specific; `v0.12.0` is normal. Incomplete scope is allowed with documented limits. |
+| `1.0.0` | **MVP:** satisfies the user's definition of success from `intake/problem-intake.md`. A single user (or a documented small deployment) can use it successfully in an approved environment, which may include real operational data (Tier T3) only inside that agency's controls. Satisfies the no-stubs policy for the declared MVP scope. |
+| `1.x.y` | **MVP maintenance:** backward-compatible fixes and small enhancements on the MVP architecture. |
+| `2.0.0` | **Platform / enterprise:** multi-user, larger scale, or major feature depth; breaking changes allowed per SemVer. Default target for production-intent hardening, including four-surface parity for declared capabilities unless exceptions are documented. |
+| `3.0.0+` | **Ecosystem maturity (optional):** multi-agency, long-lived production; only when the roadmap requires it. |
+
+## Release Planning Through v1.0.0
+
+- Maintain a user-approved release roadmap through the `v1.0.0` MVP exit criteria (for example `planning/my-release-plan.md`, based on `planning/release-roadmap-template.md`).
+- The sample `v0.1.0`–`v0.9.0` themes in the roadmap template are illustrative only, not a required count or sequence. The user may change the path at any time.
+- Let the user review the milestone and issue plan before creating GitHub milestones, issues, releases, or workflows. Show planned `gh` commands before running anything that changes GitHub state.
+- Each release boundary (typically each `0.x.0` minor and `1.0.0`) should have a GitHub milestone and, for non-trivial scope, one primary release-scoped Spec Kit folder.
+- `1.0.0` always has a dedicated milestone, release spec, MVP exit criteria, and test execution record.
+- After `1.0.0`, plan `2.0.0` when enterprise or multi-user scope is required.
+
+## Four Surfaces and MVP
+
+- `1.0.0` may require GUI, API, CLI, and MCP equivalence for declared capabilities when intake, the release spec, and users require it. Record required surfaces in MVP exit criteria and the `spec.md` release target.
+- If the MVP does not need all four surfaces, document gaps, supported alternatives, and milestone expectations per `policies/four-surface-review.md`.
+
+## Release-Scoped Spec Kit Specs
+
+Spec Kit specs are release-scoped planning containers, not one-spec-per-small-feature tickets.
+
+GitHub milestones and issues are the live source of truth for current release planning. Do not maintain a separate historical roadmap as the active plan, and do not reverse-update old planning documents solely to mirror newly created GitHub activity.
+
+When a milestone is ready for Spec Kit work, create or update one primary release spec under `specs/`. Use this naming pattern:
+
+- `001-Spec-v0.1.0-initial-skeleton`
+- `002-Spec-v0.2.0-import-workflow`
+- `011-Spec-v0.11.0-demo-hardening`
+- `013-Spec-v1.0.0-mvp`
+
+The numeric prefix preserves chronological order (increment for each new release spec). The version in the folder name must match the GitHub milestone and Git tag. The slug describes the primary release objective.
+
+A release spec may contain multiple features planned for the same release boundary. Do not create a new versioned spec for every tiny feature, defect, or maintenance task.
+
+Each release spec uses the standard Spec Kit structure: `spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model.md`, `contracts/`, and `quickstart.md`.
+
+Each `spec.md` must include a release target section:
+
+```md
+## Release Target
+
+Target release: v0.3.0
+Release type: minor
+Status: planned | in-progress | implemented | released
+GitHub milestone: v0.3.0
+Primary objective: Add hash lookup and result review workflow.
+MVP surfaces (v1.0.0 only): GUI, API, CLI, MCP | subset documented below
+Surface gaps (if any): ...
+```
+
+`Spec-v0.3.0` is the contract for intended release behavior; `v0.3.0` is the implemented, tested, tagged artifact. Agents must reason within the active release boundary: implement the remaining tasks for `Spec-v0.3.0`, but do not introduce behavior planned for `Spec-v0.4.0`. The GitHub milestone, Git tag, changelog section, release notes, and spec folder must use the same version number.
+
+## Version Sources
+
+Pick one source of truth for the version and keep every surface consistent with it, for example: `CHANGELOG.md`, `README.md`, package metadata (`pyproject.toml`, `package.json`, `.csproj`, `Cargo.toml`), API version endpoints, GUI-visible version display, CLI `--version` output, MCP server metadata, Docker image tags and Compose examples, release workflows, installation/upgrade/migration docs, and GitHub release notes.
+
+## GitHub Issues, Projects, and Milestones
+
+- Every planned feature, defect, security fix, documentation task, release task, and breaking change should have a GitHub Issue unless the repository documents a lighter-weight workflow.
+- Every implementation issue should be assigned to a milestone before implementation begins.
+- Every release must have a milestone.
+- Use GitHub Projects for milestone planning when the repository has active multi-issue development.
+- Pull requests must reference the issues they resolve.
+- Release notes must be traceable back to issues, pull requests, or documented release tasks.
+- Issues that affect multiple surfaces must identify GUI, API, CLI, MCP, docs, deployment, ontology, and security impact where applicable.
+- Closing an issue requires implementation, tests or documented verification, documentation updates when needed, and changelog updates when user-facing or operationally relevant.
+
+## Standard Issue Labels
+
+Use project-specific labels where useful, but preserve these standard categories when applicable:
+
+- Type: `type:feature`, `type:bug`, `type:security`, `type:docs`, `type:test`, `type:release`, `type:refactor`, `type:maintenance`.
+- Surface: `surface:gui`, `surface:api`, `surface:cli`, `surface:mcp`, `surface:docs`, `surface:deployment`, `surface:ontology`.
+- Priority: `priority:critical`, `priority:high`, `priority:medium`, `priority:low`.
+- Status: `status:needs-spec`, `status:planned`, `status:in-progress`, `status:blocked`, `status:needs-review`, `status:ready-for-release`.
+- Release impact: `release:breaking`, `release:minor`, `release:patch`, `release:security`.
+
+## GitHub Actions and Testing Program
+
+Follow `policies/testing-program.md` for local commands, automation levels, scanning layers, and human verification.
+
+- Pull requests for release-bound work must not merge if required checks fail.
+- Release tags are created only after required checks pass.
+- Workflows test all affected surfaces declared for the product.
+- Heavy-prerequisite tests may skip cleanly, but skipped tests must not hide missing implementation.
+
+## Changelog
+
+Follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Update `[Unreleased]` as changes land, not in a last-minute batch.
+
+- Every user-visible, operator-visible, developer-visible, security-relevant, deployment-relevant, or release-relevant change needs a `CHANGELOG.md` entry with version and ISO 8601 date.
+- Use the categories `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`; `Performance`, `Documentation`, and `Migration` may also be used.
+- Include affected surfaces where applicable: `GUI`, `API`, `CLI`, `MCP`, `Pipeline`, `Docs`, `Release`, `Security`, `Ontology`, or `Deployment`.
+- Security entries explain operator impact without exposing exploit details beyond what is appropriate; reference the affected controls in the project's chosen framework.
+- Performance entries include before/after measurements, test conditions, and references to benchmark evidence.
+- Breaking changes include migration guidance.
+
+## README and Docs
+
+Update documentation when behavior changes for installation, deployment, configuration, authentication or authorization, evidence input, GUI usage, API usage, CLI usage, MCP server usage, Docker Compose profiles, offline or air-gapped operation, GPU or CPU behavior, model weights, CASE/UCO/CAC/SOLVE-IT output, hash lookup behavior, reports and exports, release flow, migration or upgrade steps, or known limitations. Do not bury critical usage instructions only in issue comments or chat transcripts.
+
+Documentation must not claim support for features, platforms, integrations, or workflows that are incomplete or untested.
+
+## Release Checklist
+
+- The release has a GitHub milestone.
+- All release-bound issues are closed or explicitly deferred; deferred issues are documented in release notes when relevant.
+- Required checks pass (L1/L2 per `policies/testing-program.md`), and tests and builds pass for affected surfaces.
+- Dependency and image vulnerability checks are clean or explicitly triaged.
+- A test execution record is attached or linked (see `docs/manual-test-checklist.md`), with the Layer B annex completed when human verification is required for the milestone, and the data tier stated honestly.
+- Security-relevant changes have appropriate tests and documentation.
+- CASE/UCO/CAC/SOLVE-IT validation passes when exports or ontology mappings change.
+- Docker Compose profiles still work for changed services.
+- GUI, API, CLI, and MCP surfaces meet MVP or release-spec parity requirements; gaps only where documented.
+- CPU-only mode still works unless the release explicitly removes it; offline behavior is preserved where applicable.
+- The release spec folder, release target section, GitHub milestone, changelog section, and release notes use the same version number, and version metadata is consistent across files and surfaces.
+- `CHANGELOG.md`, `README.md`, and docs are updated; migration guidance exists for breaking changes.
+- GitHub release notes mirror the changelog and identify known limitations.
+- No stubs or fake implementations remain in the declared scope.
+- Release artifacts are attached, tagged, checksummed, or documented as appropriate.
+
+## Release Artifacts
+
+Release artifacts may include source archives, packages, container image tags, Compose examples, checksums, SBOMs, offline bundles, model weight instructions, ontology files or validation assets, generated documentation, migration guides, API schemas, MCP tool schemas, and example outputs using benign synthetic data.
+
+Release artifacts must not include secrets, real evidence, real victim data, real agency data, or sensitive investigative material.
+
+## Spec Kit Requirements
+
+For release-relevant work:
+
+- `/speckit.specify`: create or update the release-scoped spec folder; identify the intended version, release target section, milestone, scope, affected surfaces, compatibility expectations, and documentation obligations.
+- `/speckit.plan`: define required implementation, tests, GitHub Actions, manual test release annex, changelog entries, docs, migration notes, release artifacts, and issue/milestone links.
+- `/speckit.tasks`: create explicit tasks for each release-scoped feature, version updates, tests, docs, changelog, release notes, artifacts, and GitHub issue hygiene.
+- `/speckit.implement`: update code, tests, docs, version metadata, changelog, and release automation.
+- `/speckit.analyze`: verify release scope, issue status, milestone status, release spec folder, release target section, version metadata, changelog, docs, tests, workflows, and artifacts are consistent.
+
+## Required Agent Output
+
+For release-relevant changes, the final agent response must summarize version impact, milestone affected, issues linked or created, labels applied or recommended, GitHub Actions affected, surfaces affected, version files updated, changelog entries added, documentation updated, migration guidance added, release artifacts affected, and known limitations or deferred work.

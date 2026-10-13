@@ -1,22 +1,22 @@
 # Quickstart
 
-Use this guide when you have just cloned this template into Cursor and want to begin a new Project VIC style agentic AI development project.
+Use this guide when you have just cloned this template, opened it in your AI coding agent, and want to begin a new Project VIC style agentic AI development project.
 
 ## Student Path: Do These 7 Things
 
 1. Create a private repository from this template.
-2. Open the private repository in Cursor.
-3. Read `START-HERE-NCCC.md`.
-4. Paste the prompt in `prompts/START-CURSOR-HERE.md`.
+2. Open the private repository in your AI coding agent (see `docs/agent-setup.md`).
+3. Read `START-HERE.md`.
+4. Paste the prompt in `prompts/START-AGENT-HERE.md`.
 5. Complete `intake/problem-intake.md`.
-6. Ask Cursor to review the intake and draft a milestone plan.
+6. Ask your agent to review the intake and draft a milestone plan.
 7. Build only the first small milestone using synthetic data.
 
 ## 0. Read the Safety Rules
 
 Before creating issues, writing specs, or running setup scripts, read `SECURITY.md` and the "Important Safety Rules" section in `README.md`.
 
-Use synthetic data only while building and testing. Do not put real case data, CSAM, suspected CSAM, credentials, agency-private information, or sensitive operational details into prompts, repositories, issues, logs, screenshots, or fixtures.
+Use synthetic data only while building and testing (Tier T0/T1 in `docs/test-data-handling.md`). Do not put real case data, CSAM, suspected CSAM, credentials, agency-private information, or sensitive operational details into prompts, repositories, issues, logs, screenshots, or fixtures.
 
 ## 1. Create Your Own GitHub Repository From This Template
 
@@ -41,7 +41,7 @@ git branch -M main
 git push -u origin main
 ```
 
-If you are not sure whether this is safe to run, ask Cursor to explain each command before running it.
+If you are not sure whether this is safe to run, ask your agent to explain each command before running it.
 
 ## 2. Install Tools
 
@@ -70,27 +70,29 @@ Copy or edit `intake/problem-intake.md`. Use `docs/synthetic-test-data.md` and `
 - What synthetic data can safely represent your mission data.
 - Whether CASE, UCO, or CAC Ontology concepts are relevant.
 
-## 4. Ask Cursor to Plan
+## 4. Ask Your Agent to Plan
 
-Before asking Cursor to build anything, paste the prompt in `prompts/START-CURSOR-HERE.md`.
+Before asking your agent to build anything, paste the prompt in `prompts/START-AGENT-HERE.md`.
 
-Then use the prompts in `prompts/cursor-prompts.md`. The usual path is:
+Then use the prompts in `prompts/agent-prompts.md`. The usual path is:
 
-1. Ask Cursor to review the intake form.
-2. Ask Cursor to create a milestone plan from `v0.1.0` through `v1.0.0`.
+1. Ask your agent to review the intake form.
+2. Ask your agent to create a milestone plan from `v0.1.0` through `v1.0.0`.
 3. Save the reviewed plan as a project-specific planning file, such as `planning/my-milestone-plan.md`.
-4. Ask Cursor to create GitHub milestones and issues only after you approve the plan.
+4. Ask your agent to create GitHub milestones and issues only after you approve the plan.
 
-## 5. Use the Spec-Kit Flow
+## 5. Use the Spec Kit Flow
 
-Use the opinionated spec-kit flow:
+Install Spec Kit for your agent (`docs/agent-setup.md`), create the constitution, and then use the Spec Kit flow:
 
 1. Specify the behavior.
-2. Plan the technical approach.
-3. Break work into tasks.
-4. Implement one task at a time.
-5. Analyze consistency across the spec, plan, tasks, code, tests, and docs.
-6. Test and give feedback.
+2. Clarify anything unclear.
+3. Plan the technical approach.
+4. Break work into tasks.
+5. Analyze consistency across the spec, plan, and tasks.
+6. Implement one phase at a time.
+7. Converge: check the code against the spec and finish anything missed.
+8. Test and give feedback.
 
 Use `docs/spec-kit-workflow.md` for more detail. Testing and feedback are crucial. The agent will not know whether it solved your mission problem unless you test the result and explain what is right or wrong.
 

@@ -40,6 +40,7 @@ Create a small synthetic dataset for testing this application. It must be generi
 
 ## See Also
 
+- `docs/test-data-handling.md` for the full test data tiers (T0–T3), which channels each tier may use, and what changes after the course.
 - `examples/synthetic-data/README.md` for the example dataset folder.
 - `examples/synthetic-data/sample-case-uco-cac.jsonc` for a commented CASE/UCO/CAC-style JSON-LD teaching example.
 - `docs/case-uco-cac-guidance.md` for ontology guidance.

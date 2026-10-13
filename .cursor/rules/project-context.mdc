@@ -1,0 +1,77 @@
+---
+description: Repository-local project context (stack, surfaces, commands) to be adapted after the first intake is complete
+alwaysApply: true
+---
+<!-- Generated from policies/project-context.md by scripts/sync_agent_rules.py. Edit the source policy, then re-run the script. -->
+
+# Project Context
+
+> Adapt this file to your project after the first version of `intake/problem-intake.md` is complete. Ask the agent to propose updates and have a human review them before they are committed.
+
+This repository was created from the Project VIC Agentic AI Development Project Template. It helps a human start a new mission-tool project with an AI agent, Spec Kit, GitHub planning, synthetic test data, CASE/UCO/CAC awareness, and safety guardrails.
+
+This file provides repository-local context. It supplements, but does not replace, the other policies in `policies/`.
+
+## Template Status
+
+- Do not assume an application stack until `intake/problem-intake.md`, the project constitution, and the first Spec Kit plan identify one.
+- Do not initialize Spec Kit before the first version of `intake/problem-intake.md` is filled out.
+- Once the project is understood, replace the template guidance below with project-specific technologies, commands, surfaces, data flows, and validation steps.
+- Keep the safety, privacy, ontology, testing, no-stubs, release, cross-platform, and human-review policies active unless the project owner explicitly changes them.
+
+Do not introduce frameworks, databases, queues, package managers, build systems, deployment services, model pipelines, or major architectural dependencies without an explicit intake, spec, or plan requirement.
+
+## Spec Kit Generated Context
+
+If the optional Spec Kit `agent-context` extension is installed, Spec Kit writes technology context into one agent file (for example `.cursor/rules/specify-rules.mdc`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or `.github/copilot-instructions.md`, depending on the integration chosen at `specify init`) between `<!-- SPECKIT START -->` and `<!-- SPECKIT END -->` markers. That is expected. Generated context describes the stack; it never overrides the policies in `policies/`. Preserve Spec Kit-generated sections unless intentionally regenerating them, and keep the separate `PROJECT-VIC-POLICY` marker blocks intact.
+
+## Repository Surfaces To Establish
+
+Decide during intake and planning which surfaces are required:
+
+- GUI or other human-facing interface.
+- API or integration surface.
+- CLI, pipeline, batch, or offline workflow.
+- MCP server, prompts, tools, or resources for agent use.
+- Container, deployment, setup, or operations surface.
+- Reports, exports, generated artifacts, schemas, ontology output, or audit/provenance records.
+- Documentation, planning, Spec Kit, GitHub issues, milestones, and release materials.
+
+When one surface changes, check whether other planned surfaces need equivalent updates or a documented exception.
+
+## Common Commands To Establish
+
+Before implementation starts, define project-specific commands for:
+
+- setup and dependency installation
+- linting and formatting
+- unit, integration, contract, and end-to-end tests (one canonical fast test command, per `policies/testing-program.md`)
+- API, GUI, CLI, MCP, report/export, ontology, and container validation where applicable
+- GitHub Actions workflows, only when the project needs them (see `.github/workflows/README.md`)
+- human verification with `docs/manual-test-checklist.md` and a per-release copy of `docs/templates/manual-test-release-annex.md`
+- release versioning through the `v1.0.0` MVP, per `policies/versioning-release-management.md` and `planning/release-roadmap-template.md`
+
+Do not treat a compile-only check as a substitute for real tests when behavior changes.
+
+## Style and Implementation Guidance
+
+- Follow existing local patterns before adding abstractions.
+- Keep business logic in shared service/application layers.
+- Avoid duplicating behavior independently across GUI, API, CLI/pipeline, and MCP surfaces.
+- Keep source evidence paths read-only and validate input roots when evidence handling is in scope.
+- Reject path traversal and outputs outside approved case/run/output directories.
+- Prefer structured parsers and serializers over ad-hoc string manipulation.
+- Prefer explicit typed errors over silent failures.
+- Do not add stubs, fake success responses, or TODO-only implementation paths.
+- Keep docs, changelog, environment templates, API schemas, GUI types, pipeline artifacts, and release notes aligned.
+- Use Tier T0/T1 data for everything in this repository. See `docs/test-data-handling.md`.
+
+## Documentation and Release Hygiene
+
+Update documentation when behavior changes for installation, deployment or container profiles, configuration, GUI usage, API usage, CLI/pipeline usage, hash lookup behavior, evidence input and artifact output, CASE/UCO/CAC exports, ontology validation, offline or air-gapped operation, GPU/CPU behavior, and known limitations.
+
+User-visible or operator-visible changes should include a `CHANGELOG.md` entry.
+
+## Project-Specific Context
+
+_Add project-specific guidance below this line after intake and Spec Kit planning identify the actual product scope: stack, directory layout, canonical commands, declared surfaces, jurisdiction and security framework, and data tiers in use._

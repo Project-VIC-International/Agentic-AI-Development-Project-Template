@@ -5,11 +5,11 @@ This template encourages small, reviewable steps.
 ## Standard Loop
 
 1. Choose one issue.
-2. Ask Cursor to inspect the relevant files and propose a plan. Significant changes must go through `docs/spec-kit-workflow.md`.
+2. Ask your agent to inspect the relevant files and propose a plan. Significant changes must go through `docs/spec-kit-workflow.md`.
 3. Review the plan.
-4. Let Cursor implement the change.
+4. Let your agent implement the change.
 5. Test locally with synthetic data.
-6. Ask Cursor to fix clear failures.
+6. Ask your agent to fix clear failures.
 7. Use Karpathy's autoresearch to improve areas of the application with measured performance criteria. Create a measurement benchmark, then let autoresearch ratchet the performance up using the scientific method.
 8. Commit the working change.
 9. Push to GitHub.
@@ -18,7 +18,7 @@ This template encourages small, reviewable steps.
 
 ## Beginner Rule
 
-If you do not understand a command, ask Cursor:
+If you do not understand a command, ask your agent:
 
 ```text
 Explain this command in plain language before I run it. Tell me what files, settings, or remote services it may change.
