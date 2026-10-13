@@ -97,10 +97,6 @@ def parse_policy(path: Path) -> Policy:
     description = parse_scalar(fields.get("description", ""))
     if not description:
         raise SyncError(f"{path.relative_to(ROOT)}: description is required")
-    if "\n" in description or ": " in description or description.startswith(("[", "{", "&", "*", "!", "|", ">", "%", "@", "`")):
-        raise SyncError(
-            f"{path.relative_to(ROOT)}: description must be one plain line without ': ' or a leading YAML symbol"
-        )
 
     always_raw = fields.get("alwaysApply", "").lower()
     if always_raw not in {"true", "false"}:
@@ -129,8 +125,19 @@ def load_policies() -> list[Policy]:
     return sorted(policies, key=lambda p: (p.name != FIRST_POLICY, p.name))
 
 
+def yaml_scalar(text: str) -> str:
+    needs_quotes = (
+        ": " in text
+        or " #" in text
+        or text != text.strip()
+        or text.startswith(("[", "{", "&", "*", "!", "|", ">", "%", "@", "`", "'", '"', "-", "?", "#"))
+        or text.lower() in {"true", "false", "null", "yes", "no", "on", "off", "~"}
+    )
+    return json.dumps(text, ensure_ascii=False) if needs_quotes else text
+
+
 def render_mdc(policy: Policy) -> str:
-    front = ["---", f"description: {policy.description}"]
+    front = ["---", f"description: {yaml_scalar(policy.description)}"]
     if policy.globs:
         front.append(f"globs: {json.dumps(list(policy.globs))}")
     front.append(f"alwaysApply: {'true' if policy.always_apply else 'false'}")
