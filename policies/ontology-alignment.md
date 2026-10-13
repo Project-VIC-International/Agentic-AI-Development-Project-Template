@@ -1,0 +1,82 @@
+---
+description: Align data models, reports, exports, APIs, and generated artifacts with CASE/UCO/CAC/SOLVE-IT concepts; read during specify and plan and whenever data shapes, exports, or serialization change
+globs: ["**/*.jsonld", "**/*.ttl", "**/*.rdf", "**/*export*", "**/*serializ*", "**/schemas/**", "**/*ontology*", "**/*shacl*", "**/*shapes*", "examples/synthetic-data/**"]
+alwaysApply: false
+---
+
+# Ontology Alignment
+
+Tool outputs, APIs, reports, exports, generated artifacts, model outputs, and provenance records must remain defensible, explainable, and interoperable across the digital investigation ecosystem.
+
+Tools may use internal application schemas when appropriate, even in SQLite, PostgreSQL, JSON, CSV, document stores, or search indexes, but externally meaningful data must have documented mappings to CASE/UCO/CAC/SOLVE-IT concepts where suitable. You do not need a graph database to benefit; naming fields and relationships after ontology concepts still reduces future normalization work.
+
+## Required Ontology Grounding
+
+- Use Cyber-investigation Analysis Standard Expression (CASE) and Unified Cyber Ontology (UCO), commonly referenced together as CASE/UCO.
+- Use CASE for cyber-investigation concepts, investigative actions, provenance, roles, and investigation-oriented exchange.
+- Use UCO for cyber observables, actions, analysis, configuration, core cyber-domain concepts, identity, location, markings, patterns, roles, time, tools, data types, and shared cyber-domain vocabulary.
+- Use the Crimes Against Children (CAC) Ontology for crimes-against-children investigations, operations, grooming, sextortion, victim advocacy, offender tradecraft, ICAC/task-force concepts, cross-jurisdictional concepts, legislative-process concepts, and other CAC-specific topics.
+- Use SOLVE-IT concepts for digital forensic techniques, weaknesses, mitigations, objectives, performed techniques, tool capabilities, and tool-profile descriptions when documenting analysis methods.
+- Do not invent ad-hoc field names in CASE/UCO/CAC/SOLVE-IT exports when a canonical class or property exists.
+- Do not invent ontology classes, properties, prefixes, IRIs, namespaces, controlled-vocabulary values, or JSON-LD structure. Verify terms against ontology source, generated docs, SDK bindings, or checked-in ontology artifacts before using them.
+- Choose the most specific correct class rather than a generic parent.
+- If a needed concept is absent from CASE/UCO/CAC/SOLVE-IT, document the gap and prefer an upstream contribution or a clearly documented extension over local vocabulary drift.
+
+## When to Use Strong Ontology-First Design
+
+Use stronger ontology-first design when the project needs graph path finding, graph inferencing, subclass reasoning, complex cross-source questions, interoperable exports, chain-of-custody or provenance defensibility, or multi-agency and cross-tool workflows. Keep it lightweight for small workflow helpers or when the data model is still uncertain, but still name things after ontology concepts.
+
+## Source of Truth
+
+When mapping concepts, prefer sources in this order:
+
+1. Checked-in ontology/version artifacts pinned by the repository.
+2. Generated language bindings or mapping helpers from the CASE/UCO SDK, and its MCP server when available.
+3. Official ontology documentation and source repositories.
+4. Existing mappings already in the repository.
+5. A new extension proposal or documented gap.
+
+Official sources:
+
+- CASE Ontology: <https://github.com/casework/CASE>
+- Unified Cyber Ontology: <https://github.com/ucoProject/UCO>
+- Crimes Against Children Ontology: <https://github.com/Project-VIC-International/CAC-Ontology>
+- SOLVE-IT: <https://github.com/SOLVE-IT-DF/solve-it>
+- CASE validation utilities (`case_validate`): <https://github.com/casework/CASE-Utilities-Python>
+
+Use the CASE/UCO SDK (v1.11.0 or newer) and its MCP server to help automate class, property, and relationship lookup, data serialization, and SHACL validation where available. Setup links, guides, and recipes are in `docs/case-uco-cac-guidance.md`. The SDK provides bindings for Python, Java, C#, and Rust projects.
+
+When CASE/UCO/CAC/SOLVE-IT do not provide adequate concept coverage, develop extension ontologies instead of isolated local vocabularies, and propose them upstream through each ontology's public contribution process.
+
+## Mapping Requirements
+
+- Model analytic detections, classifier results, object detections, media classifications, model outputs, and confidence values as analytic results with model/tool provenance.
+- Hashing and hash-set lookup features must distinguish legacy lookup hashes such as MD5 from forensic integrity hashes such as SHA-256.
+- Forensic image mounting, archive extraction, frame sampling, media preprocessing, OCR, transcription, object detection, hash lookup, deduplication, and export generation are provenance actions.
+- Output artifacts (`JSON`, `CSV`, `XLSX`, `JSON-LD`, Turtle, RDF, reports, and API responses) must point back to source media, source records, and the action or process that produced them when those outputs are intended for investigative, evidentiary, audit, or interop use.
+- Preserve identifiers needed to trace derived artifacts back to source evidence without exposing sensitive values unnecessarily.
+- Keep human-readable reports and machine-readable exports aligned. Do not allow a report to say something materially different from the serialized data.
+
+## Validation
+
+- Keep SHACL validation available for CASE/UCO/CAC/SOLVE-IT output where applicable.
+- Invalid ontology output must fail closed rather than being delivered as if valid.
+- Add or update fixtures when export shapes, report schemas, ontology mappings, or serialization formats change.
+- Specs that alter artifact schemas must include ontology impact, validation commands, migration notes, and backward-compatibility considerations.
+- Validation failures are implementation defects unless the spec documents a deliberate unsupported mapping or open ontology gap.
+- For air-gapped deployments, vendor pinned ontology files and validators so validation does not need network access.
+- Tests must use benign synthetic data. Do not use real CSAM, real victim data, real case identifiers, or sensitive investigative details in ontology fixtures, examples, screenshots, or docs.
+
+## Spec Kit Requirements
+
+For schema, export, report, API, model-output, or evidence-processing changes:
+
+- `/speckit.specify`: identify domain concepts, data categories, intended consumers, required exports, and candidate CASE/UCO/CAC/SOLVE-IT mappings.
+- `/speckit.plan`: define concrete mappings, prefixes, ontology versions, serialization formats, validation commands, migration concerns, and unmapped gaps.
+- `/speckit.tasks`: create implementation and test tasks for mapping, serialization, validation, fixtures, docs, and migration notes.
+- `/speckit.implement`: implement mappings and validation using real ontology terms, not placeholders.
+- `/speckit.analyze`: verify code, schema, fixtures, docs, examples, and changelog remain aligned with the ontology mapping.
+
+## Required Agent Output
+
+For ontology-relevant changes, the final agent response must summarize new or changed data concepts, ontologies and versions consulted, classes and properties used, local fields that intentionally remain unmapped, validation commands run, fixtures and examples updated, migration or backward-compatibility concerns, and open ontology gaps or proposed extension work.

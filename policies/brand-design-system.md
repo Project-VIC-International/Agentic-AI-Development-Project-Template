@@ -1,0 +1,120 @@
+---
+description: Visible-surface standards - terminology, operator-first and trauma-aware language, verdict and confidence wording, accessibility, theming, and design-system use for GUI, reports, docs, CLI, API, and MCP text
+globs: ["**/*.css", "**/*.scss", "**/*.html", "**/*.tsx", "**/*.jsx", "**/*.vue", "**/*.svelte", "**/templates/**", "**/reports/**", "docs/**", "README.md"]
+alwaysApply: false
+---
+
+# Brand, Design, and Visible Surfaces
+
+Investigation tools, documentation, reports, demos, APIs, CLIs, and MCP servers must present a consistent, professional, accessible, and victim-centered identity. Investigators, examiners, prosecutors, and courts read what these tools show; unclear or overconfident wording can mislead people who rely on it.
+
+This policy applies to user-facing and operator-visible surfaces: GUI, API docs, CLI help text, MCP tool names and descriptions, generated reports, exports, screenshots, README files, release notes, training material, and demo content.
+
+## Source of Truth
+
+Use the brand and design system that the user or their organization designates. Ask the user if none is recorded in `policies/project-context.md`.
+
+Until a design system is chosen or vendored into the repository:
+
+- Prefer existing project theme tokens and shared UI components.
+- Avoid introducing hardcoded colors, fonts, shadows, border radii, spacing systems, icon styles, or new visual language.
+- Do not invent logos, taglines, product names, mascots, or visual systems for an organization.
+- If a needed token, component, icon, layout, or brand asset is missing, document the gap instead of creating an inconsistent local standard.
+
+**Do not use another organization's name, logo, or branding** (including the course provider, an agency, a vendor, or a standards body) on the project, its UI, or its documentation unless the user confirms they are authorized to do so.
+
+## Terminology
+
+- Use one name for the tool and use it consistently, with consistent capitalization, across every surface.
+- Use the user's role names (for example **investigator**, **digital forensics examiner**, **analyst**, **prosecutor**). Ask the user which terms their agency uses.
+- Use **child sexual abuse material (CSAM)** or the user's jurisdiction's accepted term (for example CSEM or CSEA material). Never use "child porn", "kiddie porn", or "CSAMs".
+- Define acronyms on first use in documentation and operator-facing text.
+- Record project terminology in `docs/glossary.md` and reuse it.
+
+## Operator-First Language
+
+Operator-facing text should be direct, precise, calm, and useful.
+
+- Avoid marketing-heavy phrases such as "revolutionary", "game-changing", "next-generation", "AI-powered magic", "one-click rescue", or "fully automated investigation".
+- Prefer investigator-facing terms over ML jargon: "classification result", "known hash match", "unknown media", "review queue", "case artifact", "source media", "derived artifact", "model confidence", "processing job", "export", "provenance", and "validation result".
+- Use technical terms where they are necessary, but explain them clearly.
+
+## Verdict, Confidence, and Analytic-Result Language
+
+When a tool presents analytic verdicts, classifications, detections, or confidence values to operators (investigators, examiners, prosecutors), the language must be standardized, honest, and identical across surfaces:
+
+- Define one repository-level verbal confidence vocabulary (fixed bands such as "strong indication", "moderate indication", "no clear indication", "analysis incomplete") in the shared service layer, version it, and use it identically in GUI, reports, exports, CLI, API descriptions, and MCP outputs. Do not improvise per-surface phrasings.
+- State findings as indications and analytic results, never as facts or legal conclusions. Banned formulations include "this image is fake", "this file is authentic for prosecution", "proven AI-generated", and any phrasing implying guilt, victim status, or legal classification.
+- Label every displayed score as calibrated or uncalibrated. Do not present an uncalibrated score using probability language.
+- Incomplete analysis must read as incomplete ("analysis incomplete - required detector unavailable"), never as a weak finding.
+- Plain-language summaries for non-technical operators must be deterministic (template-generated from structured results, traceable to the underlying result IDs). Do not put free-form LLM-generated narrative in evidentiary output paths.
+- Limitations and known error modes must accompany the verdict at the same visual weight, not only behind a secondary link.
+
+## Victim-Centered and Trauma-Aware Content
+
+- Use victim-centered, investigator-supportive, and professionally restrained language.
+- Do not use sensational, graphic, exploitative, joking, gamified, or emotionally manipulative language.
+- Do not use real or recognizable case imagery in screenshots, docs, fixtures, seed data, examples, reports, demos, or tests.
+- Do not include realistic CSAM descriptions, victim identifiers, offender names, agency case numbers, or sensitive investigative facts in sample content.
+- Use benign synthetic data for examples, demos, screenshots, reports, and test fixtures.
+- Center the mission and the investigators, not the tool as the hero. Do not imply that software alone safeguards children; tools support trained professionals.
+- Reduce unnecessary exposure: blur or hide sensitive media by default where the workflow allows, and let reviewers choose when to reveal it.
+
+## Accessibility
+
+- New GUI and web-visible work must target WCAG 2.2 AA unless the repository documents a different baseline.
+- GUIs SHOULD support light and dark modes, following the OS `prefers-color-scheme` setting by default with an explicit user override. Both modes must meet WCAG AA for text, cards, actions, and status or severity banners.
+- Preserve keyboard navigation, visible focus indicators, readable typography, sufficient contrast, accessible forms, semantic headings, labels, alt text, and screen-reader-friendly status updates.
+- Do not rely on color alone to communicate severity, category, confidence, status, or error conditions.
+- Error messages must be clear, actionable, and accessible.
+- Loading states, progress indicators, notifications, and validation messages must be perceivable and understandable.
+- Touch targets, drag interactions, authentication flows, and repeated-entry workflows must account for accessibility requirements.
+- Plan for localization: keep user-facing strings out of code where practical, and do not hardcode date, time, or number formats or a single language when the tool may be used across countries.
+
+## GUI and UI
+
+- Reuse existing theme patterns and components in the project; prefer shared design tokens over local styling.
+- Avoid hardcoded colors, one-off typography, custom spacing systems, and inconsistent icon styles.
+- **Do not mode-mix.** Never put light-only fills (for example `background: white` or light-only hex values) under a dark shell, and never put body text color on a pastel status fill. Use mode-aware token pairs (surface background with primary text; status tint with its matching on-tint text).
+- Severity and status banners must use paired tint and on-tint text tokens so they remain readable in both modes.
+- Keep primary actions, destructive actions, filters, status indicators, and help text in consistent places.
+- Use clear confirmations for destructive or irreversible actions.
+- Do not make sensitive case details, evidence paths, victim identifiers, or CSAM-related descriptors more visible than necessary.
+- UI text should help investigators understand what happened, what they can do next, and whether action is required.
+
+## Reports, Exports, and Generated Artifacts
+
+Reports and exports should explain what was found, how it was produced, which source media or records it came from, which tool, version, model, or action produced it, what confidence, validation, or provenance is available, and what limitations apply.
+
+- Human-readable reports and machine-readable outputs must use terminology consistent with `policies/ontology-alignment.md`.
+- Reports must not include unnecessary sensitive details, real case imagery, or graphic descriptors.
+
+## API, CLI, and MCP Surfaces
+
+Visible text in API docs, CLI help, CLI errors, MCP tool names, MCP tool descriptions, and MCP structured outputs must follow the project's terminology and tone.
+
+- API descriptions use consistent field names and terminology.
+- CLI commands provide clear, operator-friendly help text and actionable errors.
+- MCP tools use safe, bounded descriptions that explain what the tool does without exaggerating capability.
+- MCP, API, CLI, and GUI terminology stay consistent unless a difference is intentional and documented.
+- Do not expose internal implementation jargon to operators unless it is needed for troubleshooting.
+
+## Documentation and Communications
+
+Documentation, release notes, training materials, and public-facing copy must use the project's terminology, avoid unsupported claims, avoid overpromising AI or automation, state limitations honestly, use benign synthetic examples, avoid real case details, and keep screenshots and diagrams accessible and professional.
+
+Release notes must call out operator-visible copy, layout, report, export, terminology, accessibility, or workflow changes.
+
+## Spec Kit Requirements
+
+For visible-surface changes:
+
+- `/speckit.specify`: identify affected user-visible surfaces, terminology, accessibility, design, report, export, and documentation impact.
+- `/speckit.plan`: define design tokens/components, copy changes, accessibility checks, screenshot/docs updates, and terminology alignment.
+- `/speckit.tasks`: create explicit tasks for GUI/API/CLI/MCP/docs/report copy and accessibility updates.
+- `/speckit.implement`: use approved components, terminology, and accessible patterns.
+- `/speckit.analyze`: verify visible surfaces stay consistent with terminology, accessibility, ontology alignment, and release documentation.
+
+## Required Agent Output
+
+For visible-surface changes, the final agent response must summarize visible surfaces affected, design-system elements used, new or changed terminology, accessibility checks performed, screenshots/docs/reports/release notes updated, design-system gaps found, and intentionally deferred design or accessibility work.

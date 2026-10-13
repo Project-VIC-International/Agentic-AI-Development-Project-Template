@@ -87,6 +87,6 @@ echo "source .venv/bin/activate"
 echo
 echo "Next steps:"
 echo "1. Complete intake/problem-intake.md"
-echo "2. Review prompts/cursor-prompts.md"
-echo "3. Ask Cursor to create a milestone plan for review"
+echo "2. Review prompts/agent-prompts.md"
+echo "3. Ask your AI agent to create a milestone plan for review"
 

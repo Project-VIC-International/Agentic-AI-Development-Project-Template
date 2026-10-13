@@ -1,0 +1,65 @@
+---
+description: Keep API, CLI, MCP, GUI, persistence, report, and export data contracts stable, documented, deterministic, and aligned
+globs: ["**/schemas/**", "**/contracts/**", "**/models/**", "**/*schema*", "**/*openapi*", "**/*.proto", "**/types/**"]
+alwaysApply: false
+---
+<!-- Generated from policies/data-contracts-and-schemas.md by scripts/sync_agent_rules.py. Edit the source policy, then re-run the script. -->
+
+# Data Contracts and Schemas
+
+Data contracts must remain stable, documented, deterministic, and aligned across GUI, API, CLI/pipeline, MCP, reports, exports, persistence, and ontology outputs.
+
+Do not rename, remove, reinterpret, or reshape fields casually. Contract drift can break investigator workflows, lab integrations, scripts, MCP agents, ontology validation, and trust in a release.
+
+## Contract Surfaces
+
+Keep these aligned when behavior or data shape changes:
+
+- API request/response schemas, OpenAPI contracts, and error objects.
+- Domain models and DTOs (for example Pydantic or SQLModel classes).
+- TypeScript types and GUI client models.
+- CLI arguments, stdout/stderr conventions, exit codes, and JSON output.
+- MCP tool schemas, resource shapes, prompts, and structured results.
+- JSON, CSV, XLSX, JSON-LD, Turtle/RDF, reports, and generated artifacts.
+- Database schema, migration scripts, and persisted artifact metadata.
+
+Prefer one schema source that generates or validates the others, so surfaces cannot drift apart.
+
+## Schema Change Rules
+
+- Schema changes require migration notes or explicit reset guidance.
+- Breaking changes require SemVer major-version consideration and migration guidance.
+- Prefer additive, backward-compatible fields when practical.
+- Machine-readable outputs must be deterministic and documented.
+- Field names, enum values, IDs, timestamps, hashes, confidence values, and provenance links must keep the same meaning across surfaces.
+- Use unambiguous timestamps (ISO 8601 with UTC offset) and state the time zone of any local time shown to users.
+- Nullable, optional, defaulted, deprecated, and removed fields must be intentional and documented.
+- Do not expose sensitive evidence paths, victim identifiers, or protected case details unless required and approved.
+
+## Ontology and Export Requirements
+
+- CASE/UCO/CAC/SOLVE-IT exports must use verified ontology terms and include validation examples where applicable.
+- JSON-LD/RDF outputs need stable prefixes, IRIs, contexts, and SHACL validation where applicable.
+- Reports and exports used for investigative, evidentiary, audit, or interoperability purposes must point back to source media or records and the action or process that produced them.
+- Human-readable reports must not make claims that differ materially from machine-readable outputs.
+
+## Tests and Fixtures
+
+- Add or update fixtures for every exported artifact shape and public contract change.
+- Tests must cover success, invalid input, missing field, unknown field, backward compatibility, and error behavior where applicable.
+- Committed contract fixtures use Tier T0/T1 per `docs/test-data-handling.md`.
+- Golden files are acceptable when deterministic and reviewed; update them only when the schema change is intentional.
+
+## Spec Kit Requirements
+
+For contract-relevant work:
+
+- `/speckit.specify`: identify affected schemas, consumers, compatibility expectations, sensitive fields, and ontology/export impact.
+- `/speckit.plan`: define contract changes, versioning, migration notes, validation commands, fixture updates, and deprecation strategy.
+- `/speckit.tasks`: create tasks for each affected surface, schema, fixture, validation, docs, changelog, and migration guidance.
+- `/speckit.implement`: update contracts and tests together; do not leave generated types, docs, or examples stale.
+- `/speckit.analyze`: verify all contract surfaces remain aligned and breaking changes are documented.
+
+## Required Agent Output
+
+For contract-relevant changes, the final agent response must summarize changed schemas, affected surfaces, compatibility impact, fixtures/tests updated, ontology validation impact, migration notes, and whether a version bump or changelog entry is needed.

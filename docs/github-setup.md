@@ -14,7 +14,7 @@ For most student and mission-support projects, create a new private repository u
 
 ## Install GitHub CLI
 
-GitHub CLI lets you and your Cursor agent work with GitHub from the terminal.
+GitHub CLI lets you and your AI agent work with GitHub from the terminal.
 
 Check whether it is installed:
 
@@ -55,7 +55,7 @@ git branch -M main
 git push -u origin main
 ```
 
-Ask Cursor to explain the commands if you are unsure.
+Ask your agent to explain the commands if you are unsure.
 
 ## Development Loop
 

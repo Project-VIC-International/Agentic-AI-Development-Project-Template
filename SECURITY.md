@@ -19,12 +19,12 @@ Use synthetic data that is generically representative of your mission data. The 
 
 Build applications so they can later process and store real mission data, but only deploy them into approved production environments with the right legal, technical, and agency controls.
 
-Development environments, personal GitHub accounts, test Cursor sessions, and public AI tools are not production investigative systems.
+Development environments, personal GitHub accounts, AI coding agent sessions, and public AI tools are not production investigative systems.
 
 ## Repository Defaults
 
 - Use private repositories by default.
-- Review permissions before connecting Cursor, GitHub CLI, MCP servers, or third-party tools.
+- Review permissions before connecting AI coding agents, GitHub CLI, MCP servers, or third-party tools.
 - Keep GitHub Actions minimal to reduce cost and limit exposure.
 - Do not upload large evidence-like files or use Git LFS unless your agency has approved the cost and data handling model.
 - Remove secrets from commits immediately if they are accidentally added, and rotate the exposed secret.

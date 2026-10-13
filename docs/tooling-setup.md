@@ -1,6 +1,6 @@
 # Tooling Setup
 
-The setup scripts are helpers, not magic. Read them before running them, and ask Cursor to explain any command you do not understand.
+The setup scripts are helpers, not magic. Read them before running them, and ask your agent to explain any command you do not understand.
 
 ## Supported Starter Environments
 
@@ -43,5 +43,5 @@ On Windows PowerShell:
 .\.venv\Scripts\Activate.ps1
 ```
 
-Then continue with `intake/problem-intake.md` and `prompts/cursor-prompts.md`.
+Then continue with `intake/problem-intake.md` and `prompts/agent-prompts.md`.
 
