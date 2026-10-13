@@ -1,6 +1,6 @@
 ---
 description: Experiment-driven (autoresearch) loop for measured performance or detection-quality improvement after a feature works; ask the user before running it
-globs: ["**/benchmarks/**", "**/bench/**", "**/eval/**", "tools/autoresearch/**", "**/*perf*", "**/*benchmark*"]
+globs: ["**/benchmarks/**", "**/bench/**", "**/eval/**", "**/*perf*", "**/*benchmark*"]
 alwaysApply: false
 ---
 <!-- Generated from policies/auto-research.md by scripts/sync_agent_rules.py. Edit the source policy, then re-run the script. -->
@@ -83,7 +83,7 @@ For performance work that changes processing, exports, or rendering, verify that
 
 ## Research Logs
 
-Store experiment records in the release spec's `research.md`, `tools/autoresearch/results/`, or another documented repository location.
+Store experiment records in the release spec's `research.md`, `benchmarks/results/`, or another documented repository location.
 
 Each record includes hypothesis, changed variable, commit or branch, benchmark command, dataset description, hardware profile, software/container version, before metrics, after metrics, output-equivalence result, decision (keep, reject, retry, or defer), and the reason.
 
