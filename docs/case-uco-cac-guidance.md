@@ -58,6 +58,6 @@ Review this project idea and identify which CASE, UCO, and CAC Ontology concepts
 
 ## See Also
 
-- `.cursor/rules/ontology-alignment.mdc` for the binding agent rule.
+- `policies/ontology-alignment.md` for the binding agent policy.
 - `examples/synthetic-data/sample-case-uco-cac.jsonc` for a commented teaching example.
 - `docs/synthetic-test-data.md` for safe test data guidance.

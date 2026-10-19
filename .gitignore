@@ -19,6 +19,10 @@ tools/
 credentials.json
 secrets.*
 
+# Local-only test data (Tier T2/T3, never committed; see docs/test-data-handling.md)
+demo-data/local/
+testdata/local/
+
 # OS and editor noise
 .DS_Store
 Thumbs.db

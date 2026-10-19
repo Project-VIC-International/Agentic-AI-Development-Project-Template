@@ -1,6 +1,6 @@
 ---
 name: Project VIC spec-kit issue
-about: Plan a small, testable unit of work aligned to the Project VIC Cursor rules
+about: Plan a small, testable unit of work aligned to the project policies in policies/
 title: ""
 labels: "needs-spec"
 assignees: ""
@@ -43,7 +43,7 @@ _Use CASE/UCO SDK v1.11.0+ and its MCP server. List relevant namespaces, classes
 
 ## Security and Compliance
 
-_Default to NIST SP 800-53 and FBI CJIS Security Policy unless the user declares another national or agency framework. List applicable controls, sensitive-data boundaries, auth/audit/encryption/input-validation implications, and any questions for the user._
+_Use the jurisdiction and control framework recorded in `policies/project-context.md` (see `policies/security-compliance.md`; ask the user if none is recorded). List applicable controls, sensitive-data boundaries, auth/audit/encryption/input-validation implications, and any questions for the user._
 
 ## Synthetic Test Data
 

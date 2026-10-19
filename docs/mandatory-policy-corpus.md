@@ -1,6 +1,6 @@
 # Mandatory Development Policy Corpus
 
-Project VIC development agents in this repository follow the mandatory policy corpus. Do not edit the generated policy files by hand. A change to policy has to come from a new reviewed corpus version.
+v0.2.0 pinned the Project VIC mandatory policy corpus in this repository. As of v0.2.1, agents follow the public-safe policies in `policies/`. The files under `.project-vic/` stay as the upstream pin. Do not load them as a second live rule set.
 
 ## Pinned source
 
@@ -14,38 +14,26 @@ Project VIC development agents in this repository follow the mandatory policy co
 | Policy count | 25 |
 | Installed on | 2026-10-19 |
 
-There is no GitHub release tag for this corpus yet. This repository pins the commit above. Do not update policy by cloning the moving `main` branch.
+There is no GitHub release tag for this corpus yet. This repository pins the commit above. Do not update the pin by cloning the moving `main` branch.
 
 The manifest copied into this repository is `.project-vic/manifest.json`.
 
-## Installed adapters
+## What agents follow
 
-The official installer was `python3 scripts/corpus.py install` from the pinned corpus checkout. Cursor was installed with `--overwrite` because this repository already had different Cursor rules and those rules were replaced on purpose.
+Edit `policies/`, then run:
 
-| Agent | Entry point |
-| --- | --- |
-| Cursor | `.cursor/rules/*.mdc` |
-| Claude Code | `CLAUDE.md` |
-| GitHub Copilot | `.github/copilot-instructions.md` and `.github/instructions/*.instructions.md` |
-| Gemini CLI | `GEMINI.md` |
-| Hermes Agent | `.hermes.md` |
-| OpenCode | `opencode.json` |
-| Zed | `.rules` |
-| OpenAI Codex | `AGENTS.md` and `.codex/config.toml` |
-| Warp | `AGENTS.md` |
+```bash
+python3 scripts/sync_agent_rules.py
+```
 
-Shared canonical policy text also lives in `.project-vic/policies/`. `.project-vic/PROJECT-VIC-POLICY.md` is the combined human-readable copy.
+That refreshes `.cursor/rules/*.mdc` and the policy sections in `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and `.github/copilot-instructions.md`. OpenCode loads `policies/*.md` through `opencode.json`. Codex still uses `AGENTS.md` with `.codex/config.toml`.
 
-## Codex and Warp
-
-Codex and Warp both use `AGENTS.md`, and the two generated copies are not byte-for-byte identical. Only the tool name on the first line differs. The policy text below that line is the same.
-
-This repository keeps the Codex `AGENTS.md` together with `.codex/config.toml`. That config raises Codex's project-document limit to 262,144 bytes so the full corpus is not cut off at the 32 KiB default. Warp reads the same `AGENTS.md`. Its policy text matches the Warp adapter. The first-line label says Codex.
-
-## Local rules that were not kept
-
-The installer does not delete files. After installation, `.cursor/rules/student-mode.mdc` was still present. It is not part of the mandatory corpus, so it was removed. No local supplemental instruction is approved. Do not add a repository rule that weakens these policies.
+`.hermes.md`, `.rules`, and `.github/instructions/` were removed in v0.2.1 so Hermes, Zed, and Copilot do not also load the full upstream corpus.
 
 ## Check
 
-On 2026-10-19, `python3 scripts/corpus.py check` passed in the pinned corpus checkout. Every installed adapter file was then compared with that checkout. All compared files matched. The Warp `AGENTS.md` was not copied, for the reason above.
+On 2026-10-19, `python3 scripts/corpus.py check` passed for the pinned corpus checkout, and the v0.2.0 install matched that checkout. v0.2.1 then adopted the public policy set from pull request 9. Confirm the live set with:
+
+```bash
+python3 scripts/sync_agent_rules.py --check
+```

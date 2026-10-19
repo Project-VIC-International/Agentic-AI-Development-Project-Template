@@ -50,8 +50,8 @@ Work only on the first task for milestone v0.1.0. Inspect the code first, explai
 
 ## See Also
 
-- `.cursor/rules/speckit-workflow.mdc` for the binding agent rule.
-- `.cursor/rules/four-surface-review.mdc` for the four-interface architecture review.
+- `policies/speckit-workflow.md` for the binding agent policy.
+- `policies/four-surface-review.md` for the four-interface architecture review.
 - `.github/ISSUE_TEMPLATE/project_issue.md` for issue fields that prepare work for spec-kit.
 - `docs/development-workflow.md` for the day-to-day develop, test, commit, and release loop.
 

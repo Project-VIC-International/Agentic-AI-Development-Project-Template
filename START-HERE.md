@@ -1,34 +1,33 @@
 # Start Here
 
-This repository is your working project starter. Use it in a conference workshop, a classroom, or when you continue the work on your own afterward.
+This repository is your working project starter. It works with any AI coding agent (Cursor, Claude Code, Codex, GitHub Copilot, Gemini CLI, and others). See `docs/agent-setup.md` for your agent.
 
-Before asking Cursor to build anything:
+Before asking your agent to build anything:
 
 1. Read `QUICKSTART.md`.
 2. Read `SECURITY.md`.
 3. Complete `intake/problem-intake.md`.
-4. Ask Cursor to summarize `.cursor/rules/`.
-5. Ask Cursor to review `prompts/START-CURSOR-HERE.md`.
-6. Ask Cursor to review your intake form. The Cursor agent may ask lots of questions. Just talk to it in your natural language. If you don't have an answer, tell the agent that you don't know and that you want its help figuring it out.
-7. Create your GitHub repository with the name of your application. Give the ".git" address to your agent and tell it that it needs to use that new repo going forward. Cursor will keep your local repository and your new GitHub repository synced.
-8. Review the `scripts/` folder to find the operating system you are using. Right-click the setup file name and add it to the Cursor chat. Ask Cursor if it has all of the software it needs for your project, and tell it to install software dependencies into a virtual environment such as a `.venv`. That protects your computer from software conflicts. Let Cursor execute the script if it needs to. It might need your help with a sudo or admin password. It may add additional software dependencies for installation.
-9. Ask Cursor to ensure that spec-kit is installed and is set up to use the full spec-kit project scaffolding, starting with creation of the project's constitution.
-10. Ask Cursor to create a milestone plan with issues in your new GitHub repo.
-11. Ask Cursor to push code and releases for each version to GitHub for safekeeping.
-12. Ask Cursor to make a `glossary.md` in the `docs` directory to store unique concepts and definitions related to your application.
-13. Ask Cursor to update your `README.md` and `CHANGELOG.md` for every minor and major release, and to use the changelog release notes when it writes the release notes on GitHub.
-14. Ask Cursor what needs to be done to start the implementation. It should work with you to create the first spec.
+4. Paste the prompt in `prompts/START-AGENT-HERE.md` into your agent. It tells the agent to read `AGENTS.md` and the policies in `policies/`, and to explain them to you.
+5. Ask your agent to review your intake form. It may ask lots of questions. Answer in your own words. If you do not know an answer, say so and ask the agent to help you work it out.
+6. Create your GitHub repository with the name of your application (keep it **private**). Give the repository's `.git` address to your agent and tell it to use that repository from now on. The agent will ask before it pushes anything.
+7. Open the `scripts/` folder and find the setup script for your operating system. Add it to your agent's chat and ask whether you have all the software the project needs. Ask it to install project dependencies into a virtual environment (such as `.venv`), which protects your computer from software conflicts. The agent must explain each install and wait for your approval; it may need you to type a `sudo` or administrator password yourself.
+8. Ask your agent to install Spec Kit for your agent (see `docs/agent-setup.md`) and to start the full Spec Kit workflow by creating the project's constitution.
+9. Ask your agent to create a milestone plan, and after you approve it, the milestones and issues in your GitHub repository.
+10. Ask your agent to push code and releases for each version to GitHub for safekeeping.
+11. Ask your agent to create `docs/glossary.md` for the terms and definitions used in your application.
+12. Ask your agent to update `README.md` and `CHANGELOG.md` for every minor and major release, and to use the changelog to write the GitHub release notes.
+13. Ask your agent what needs to be done to start implementation. It should begin the first spec with you.
 
-Do not paste real case data into Cursor, GitHub, issues, logs, screenshots, test files, or sample data. Use synthetic data only while you design, build, and test.
+**Do not put real case data into your agent, GitHub, issues, logs, screenshots, test files, or sample data.** For a conference, workshop, or course, all development uses synthetic data (Tier T0/T1 in `docs/test-data-handling.md`).
 
 This approach will get you to a v1.0.0 minimum viable product for your idea.
 
-Your goal is to team with your AI agent to test your application. That means the agent can test it, and you can test it separately, then give your agent feedback on what needs to be improved.
+Your goal is to team with your AI agent to test your application. The agent can run automated tests, and you test the tool separately as an investigator would (`docs/manual-test-checklist.md`), then tell the agent what needs to be improved.
 
-Ask your agent to search GitHub for other projects that are similar to what you want to build, and to find building-block technologies that would be useful to your project. Ask it to search the Linux Foundation and standards bodies so that you keep building with open technologies and established data standards in your field. If you use technology from other GitHub repositories or open-source projects, make sure your agent checks the licenses and confirms they are permissive for your use case. Reshape wheels that already exist so they fit your purpose. That is usually easier, and it can save time and money.
+Ask your agent to search GitHub for projects similar to what you want to build, and for building-block technologies that would help. Ask it to look at the Linux Foundation and standards bodies so you build on open technologies and established data standards in your field. If you use code from other GitHub repositories or open-source projects, make sure your agent checks that the licenses allow your use. Don't reinvent the wheel; reshape the wheels that already exist to fit your exact purpose. It is usually faster and cheaper.
 
-As you get toward a v1.0.0, ask your agent to remove references to this template and any workshop materials, and to turn the repository into a professional development project. Ask it to improve your Cursor rules and the way spec-kit distills those rules. That helps you move from a demoable v1.0.0 to a v2.0.0 and later operational version. Ask your agent to plan milestones beyond v1.0.0 with GitHub milestones and issues. Ask your agent to make custom labels that fit your project, to use GitHub issue types, and, if you want a shared board, to create a GitHub Project so you can organize activities and collaborators.
+As you get closer to v1.0.0, you can ask your agent to remove the references to this template and the training course, and to turn the repository into a professional development project. Ask it to improve the policies in `policies/` for your project and agency (including your jurisdiction's security rules) and to run `python3 scripts/sync_agent_rules.py` afterwards. This helps you move from a v1.0.0 demonstrable MVP built in a class to a v2.0.0+ operational version. Have your agent help you plan milestones beyond v1.0.0 using GitHub milestones and issues, create custom issue labels that fit your project, use GitHub issue types, and set up a GitHub Project (a planning board, not a repository) to organize your work and collaborators.
 
-This is a learning process. You will keep getting better as you design and build more of your own applications or extend existing ones. Email support@projectvic.zendesk.com if you need assistance, or if this template is useful for your work. If you see something you do not understand, ask your agent. It can explain anything at any level. It is fine to say: "I am not a software developer. Please explain this word, phrase, or code in plain language I can use with my team."
+This is a learning process. You will keep getting better as you design and build more of your own applications or extend existing ones. Email support@projectvic.zendesk.com if you need help or if you found this useful. If you see something you don't understand, ask your agent; it can explain anything at any level. For example: "I am a prosecutor and I am not technical. Please explain this word, phrase, or code in plain, non-technical language: (paste it here)". You can also ask it to answer in your first language.
 
-Finally, Project VIC International is a nonprofit. If this is useful for your mission, please share it with your colleagues and consider a donation to help sustain the work: https://secure.givelively.org/donate/project-vic-international-inc
+Finally, Project VIC International is a nonprofit. If you find this useful for your mission, please share it with your colleagues and consider making a donation to help sustain our work for crimes-against-children investigators worldwide: https://secure.givelively.org/donate/project-vic-international-inc

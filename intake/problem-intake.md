@@ -1,6 +1,6 @@
 # Problem Intake
 
-Complete this file before asking Cursor to create a project plan.
+Complete this file before asking your AI agent to create a project plan.
 
 Use this form with `QUICKSTART.md`, `docs/synthetic-test-data.md`, and `docs/case-uco-cac-guidance.md`. After the form is complete, ask the agent to create a project-specific milestone plan using `planning/milestone-plan-template.md`.
 
@@ -36,7 +36,7 @@ _What should the tool produce? Examples: report, dashboard, export, alert, CASE/
 
 ## CASE/UCO/CAC Concepts
 
-_Which ontology concepts may apply? If you are unsure, ask Cursor to recommend likely concepts._
+_Which ontology concepts may apply? If you are unsure, ask your agent to recommend likely concepts._
 
 ## Constraints
 

@@ -1,11 +1,12 @@
 ---
-description: No stubs - implement real Project VIC functionality with tested behavior and actionable failures
+description: No stubs - implement real functionality with tested behavior and actionable failures
 alwaysApply: true
 ---
+<!-- Generated from policies/no-stubs.md by scripts/sync_agent_rules.py. Edit the source policy, then re-run the script. -->
 
 # No Stubs
 
-Project VIC development must not leave fake, placeholder, or TODO-only behavior in production paths.
+Development must not leave fake, placeholder, or TODO-only behavior in production paths.
 
 A feature is not complete because files, routes, buttons, commands, tools, or schemas exist. A feature is complete only when the documented behavior is implemented, connected to applicable surfaces, tested or manually verified, and able to fail honestly when prerequisites are unavailable.
 
@@ -13,16 +14,16 @@ Scaffolding is allowed only when it is not exposed as a working feature and is c
 
 ## Prohibited Production Behavior
 
-Never add or leave the following in production paths:
+Never add or leave the following in production paths, in any language:
 
-- Placeholder implementations.
+- Placeholder implementations, or `pass`, `NotImplemented`, `return {}`, `return None`, empty handlers, or commented-out logic as shipped behavior.
 - Fake success responses.
-- TODO-only endpoints.
+- TODO-only endpoints or functions.
 - Hardcoded demo results.
 - Mock returns presented as real output.
 - Silent no-op behavior.
 - Disabled checks that make tests pass.
-- Fake Project VIC hash lookup results.
+- Fake hash lookup results.
 - Fake model detections or classifications.
 - Fake provenance records.
 - Fake audit events.
@@ -30,6 +31,7 @@ Never add or leave the following in production paths:
 - Fake export files.
 - Fake database writes.
 - Fake authentication or authorization decisions.
+- Fake IDs, hashes, ontology terms, security checks, or performance numbers.
 - Catch-all exception handling that hides missing implementation.
 - UI controls that appear functional but do not perform real work.
 - MCP tools that return plausible-looking results without invoking real functionality.
@@ -70,13 +72,13 @@ Never add or leave the following in production paths:
 
 If an external dependency is unavailable, detect it and fail honestly. Missing dependencies must never produce fake success paths.
 
-Examples include GPU runtime, `ffmpeg`, EWF or forensic image mounting tools, Docker or container runtime, database services, Project VIC lookup data, model weights, ontology files, SHACL validators, API keys, mounted evidence, writable output directories, network access when required, and offline bundle assets.
+Examples include GPU runtime, `ffmpeg`, EWF or forensic image mounting tools, Docker or container runtime, database services, hash-set lookup data, model weights, ontology files, SHACL validators, API keys, mounted evidence, writable output directories, network access when required, and offline bundle assets.
 
 ## Tests and Fixtures
 
 - Tests may use mocks, fixtures, synthetic data, monkeypatching, and fake services only when the test clearly verifies the behavior under test.
 - Tests must not encode fake success paths that hide missing implementation.
-- Use benign synthetic fixtures. Never require real CSAM, real victim data, real agency data, or sensitive investigative material.
+- Use benign synthetic fixtures. Synthetic data is safe representative input, not permission to fake the implementation.
 - When a production dependency is mocked in a test, include at least one test or documented verification path proving the real integration works or fails honestly.
 - Tests should verify both success and failure behavior.
 - Tests should confirm that incomplete configuration, unavailable dependencies, invalid inputs, and unsupported platforms produce actionable failures.
@@ -97,11 +99,12 @@ A Spec Kit task is not complete until the planned behavior is implemented, conne
 
 Deferred work is allowed only when it is explicit and safe:
 
-- The incomplete capability must not be exposed as working.
-- The limitation must be documented in the spec, plan, task list, README, or issue tracker.
-- The GUI/API/CLI/MCP surface must hide, disable, or clearly reject the unavailable capability.
-- The code must fail with an actionable error if an operator or agent tries to use the unavailable path.
-- The changelog or release notes must not describe deferred work as complete.
+- The user explicitly chose to defer it, and a tracked GitHub issue exists.
+- The incomplete capability is not exposed as working.
+- The limitation is documented in the spec, plan, task list, README, or issue tracker.
+- The GUI/API/CLI/MCP surface hides, disables, or clearly rejects the unavailable capability.
+- The code fails with an actionable error if an operator or agent tries to use the unavailable path.
+- The changelog and release notes do not describe deferred work as complete.
 
 ## Required Agent Output
 

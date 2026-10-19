@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "instructions": [
-    ".project-vic/policies/*.md"
+    "policies/*.md"
   ]
 }

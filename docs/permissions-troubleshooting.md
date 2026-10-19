@@ -1,6 +1,6 @@
 # Permissions Troubleshooting
 
-Use this guide when Cursor, Git, or GitHub CLI cannot access your repository.
+Use this guide when your AI agent, Git, or GitHub CLI cannot access your repository.
 
 ## Check GitHub CLI
 
@@ -29,7 +29,7 @@ git remote -v
 
 The `origin` remote should point to your GitHub repository.
 
-If it points to the wrong repository, ask Cursor to help you update it. Do not guess if you are unfamiliar with Git.
+If it points to the wrong repository, ask your agent to help you update it. Do not guess if you are unfamiliar with Git.
 
 ## Check Repository Access
 

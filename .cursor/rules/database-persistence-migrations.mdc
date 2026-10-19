@@ -1,53 +1,56 @@
 ---
-description: Manage Project VIC persistence, migrations, indexes, backups, and data integrity safely
-globs: ["**/*migration*", "**/models/**", "**/db/**", "**/*database*", "**/*persistence*", "**/*.sql"]
+description: Protect evidence integrity, auditability, local-first deployment, and upgrade safety when changing databases, storage, persistence, or migrations
+globs: ["**/migrations/**", "**/alembic/**", "**/db/**", "**/database/**", "**/*repository*", "**/*.sql", "**/models/**"]
 alwaysApply: false
 ---
+<!-- Generated from policies/database-persistence-migrations.md by scripts/sync_agent_rules.py. Edit the source policy, then re-run the script. -->
 
 # Database, Persistence, and Migrations
 
-Project VIC persistence changes must protect evidence integrity, operator trust, auditability, local-first deployments, and upgrade safety.
+Persistence changes must protect evidence integrity, operator trust, auditability, local-first deployments, and upgrade safety.
 
-Do not change persistence behavior without migrations, rollback/reset guidance, data-integrity checks, and documentation.
+Do not change persistence behavior without migrations, rollback or reset guidance, data-integrity checks, and documentation.
 
 ## Persistence Principles
 
 - Keep source evidence read-only. Store derived artifacts, extracted content, metadata, model outputs, audit events, and provenance separately from original evidence.
-- Support SQLite/local-first deployments where appropriate.
+- Support SQLite or other local-first storage where appropriate.
 - Optional MongoDB, Postgres, object stores, queues, or other services must remain optional unless explicitly approved in Spec Kit.
 - Do not silently drop, rename, overwrite, or reinterpret persisted data.
-- Persisted records should include enough provenance to explain what produced them, when, with which tool/model/configuration, and from which source.
-- Audit/provenance records should be append-friendly and tamper-evident where practical.
+- Persisted records should include enough provenance to explain what produced them, when, with which tool, model, and configuration, and from which source.
+- Audit and provenance records should be append-friendly and tamper-evident where practical.
+- Store data where the user's jurisdiction and agency require it. Do not add cloud storage that moves data across borders without the user's approval.
 
 ## Migrations and Compatibility
 
-- Schema changes require migrations or explicit reset guidance for pre-production/prototype data.
+- Schema changes require migrations or explicit reset guidance for pre-production or prototype data.
 - Migrations must be deterministic, repeatable, and safe to run in documented deployment profiles.
 - Include rollback guidance or explain why rollback is not supported.
-- Breaking persistence changes require SemVer and release-management review.
+- Breaking persistence changes require SemVer and release-management review (`policies/versioning-release-management.md`).
 - Data migrations must not delete source evidence or operator-selected case records.
-- Migration docs must describe backup/restore expectations and known limitations.
+- Migration docs must describe backup and restore expectations and known limitations.
+- Ask the user before running a migration or reset against any database that holds data they care about.
 
 ## Indexes and Performance
 
-- Add indexes intentionally and document the query/workflow they support.
+- Add indexes intentionally and document the query or workflow they support.
 - Consider write cost, storage impact, migration time, and low-resource deployments.
 - Performance-related persistence changes need before/after evidence when claimed.
-- Do not add a new database/cache/search service only to solve a local performance issue without Spec Kit approval.
+- Do not add a new database, cache, or search service only to solve a local performance issue without Spec Kit approval.
 
 ## Security and Privacy
 
 - Do not persist secrets, API keys, victim identifiers, sensitive case details, or unnecessary evidence paths unless explicitly required and protected.
-- Define retention/deletion behavior for temporary records, queues, caches, failed jobs, embeddings, and derived artifacts.
+- Define retention and deletion behavior for temporary records, queues, caches, failed jobs, embeddings, and derived artifacts.
 - Logs and errors must not dump database rows containing protected data.
-- Backups, exports, and debug dumps must follow security, privacy, and synthetic-data rules.
+- Backups, exports, and debug dumps must follow `policies/security-compliance.md` and `policies/privacy-redaction-and-synthetic-data.md`.
 
 ## Tests and Verification
 
 - Test migrations from representative prior schema versions when feasible.
-- Test fresh initialization, upgrade, missing/invalid config, permission-denied storage, and rollback/reset guidance.
+- Test fresh initialization, upgrade, missing or invalid config, permission-denied storage, and rollback/reset guidance.
 - Test that source evidence remains read-only and derived data stays in approved storage locations.
-- Use Tier T0/T1 in committed DB tests and migrations; Tier T2 only in local environments per `docs/test-data-handling.md`.
+- Use Tier T0/T1 data in committed database tests and migrations; Tier T2 only in local environments after the course, per `docs/test-data-handling.md`.
 
 ## Spec Kit Requirements
 

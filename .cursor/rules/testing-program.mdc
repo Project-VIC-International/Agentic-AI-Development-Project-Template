@@ -1,144 +1,140 @@
 ---
-description: Project VIC testing program — automation tiers, GitHub Actions, security scanning layers, local commands, and human verification
-globs: ["**/.github/workflows/**", "**/Makefile", "**/justfile", "**/pyproject.toml", "**/package.json", "**/package-lock.json", "docs/manual-test-checklist.md", "docs/templates/manual-test-release-annex.md", "docs/developer-guide.md", ".github/pull_request_template.md"]
+description: Testing program - automation levels, local commands, GitHub Actions conventions, security scanning layers, and human verification; read when adding test commands, CI workflows, or preparing a release
+globs: ["**/.github/workflows/**", "**/Makefile", "**/justfile", "**/pyproject.toml", "**/package.json", "docs/manual-test-checklist.md", "docs/templates/manual-test-release-annex.md", ".github/pull_request_template.md"]
 alwaysApply: false
 ---
+<!-- Generated from policies/testing-program.md by scripts/sync_agent_rules.py. Edit the source policy, then re-run the script. -->
 
 # Testing Program
 
-Project VIC repositories use a shared **testing program** that combines automated checks (local and GitHub Actions) with structured **human verification**. This rule defines how to run quality work; `testing-quality.mdc` defines what automated tests must prove.
+This project combines automated checks (local and GitHub Actions) with structured **human verification**. This policy defines how to run quality work; `policies/testing-quality.md` defines what automated tests must prove.
 
-Human testers follow `docs/manual-test-checklist.md`. Release-specific scenarios belong in `docs/templates/manual-test-release-annex.md` (copied per release spec).
+Human testers follow `docs/manual-test-checklist.md`. Release-specific scenarios go in a copy of `docs/templates/manual-test-release-annex.md` inside the release spec folder.
 
 ## Standards Basis
 
-The program aligns with risk-based acceptance practices from ISO/IEC/IEEE 29119 (documentation and traceability), ISTQB test levels and types, OWASP verification guidance for security spot-checks, WCAG 2.2 for accessibility spot-checks, and session-based exploratory testing for workflow discovery. Automated CI implements regression and contract tests; human checklists implement system and acceptance verification automation cannot fully replace.
+The program follows risk-based acceptance practices from ISO/IEC/IEEE 29119 (documentation and traceability), ISTQB test levels and types, OWASP verification guidance for security spot-checks, WCAG 2.2 for accessibility spot-checks, and session-based exploratory testing for workflow discovery. Automated CI implements regression and contract tests; human checklists implement system and acceptance verification that automation cannot fully replace. Forensic tools should also plan for independent tool validation (for example, NIST CFTT-style testing, peer agencies, or ISO/IEC 17025 laboratory processes) before operational use.
 
-Do not claim CJIS, NIST, or jurisdictional compliance solely because this program was followed.
+Following this program does not by itself demonstrate compliance with any security framework or jurisdiction.
 
-## Testing Tiers
+## Automation Levels
 
-| Tier | When | Purpose |
+These levels describe **when checks run**. They are separate from the test **data** tiers T0–T3.
+
+| Level | When | Purpose |
 |------|------|---------|
-| **T0 Local** | Every change | Fast feedback via one documented developer command |
-| **T1 PR CI** | Every pull request | Merge gate: lint, types, unit, contract tests, container build where applicable |
-| **T2 Main / scheduled** | Default branch; optional cron | Integration drift: compose smoke, heavier integration, docs build, image scan on built artifacts |
-| **T3 Release** | Tag or milestone closure | Ship confidence: release checklist, SBOM, full human checklist + release annex, manual/GPU/offline matrix when documented |
-| **T4 Post-release** | Optional schedule | Rescan dependencies and published images; no substitute for T3 |
+| **L0 Local** | Every change | Fast feedback through one documented developer command |
+| **L1 PR CI** | Every pull request, once CI exists | Merge gate: lint, types, unit, contract tests, container build where applicable |
+| **L2 Main / scheduled** | Default branch; optional schedule | Integration drift: compose smoke, heavier integration, docs build, image scan on built artifacts |
+| **L3 Release** | Tag or milestone closure | Ship confidence: release checklist, SBOM, full human checklist plus release annex, manual GPU/offline matrix when documented |
+| **L4 Post-release** | Optional schedule | Rescan dependencies and published images; no substitute for L3 |
 
-**CI parity:** T1 jobs must invoke the same scripts as T0 where possible. Behavior that only passes in CI is a defect.
+**CI parity:** L1 jobs must invoke the same commands as L0 where possible. Behavior that only passes in CI is a defect.
 
-**Skips:** Heavy prerequisites (GPU, EWF, large models, offline bundles) may skip in CI with explicit markers and summary counts. Skips must not be the only verification for a capability declared production-ready in the active release spec. See `cross-platform.mdc` and `testing-quality.mdc`.
+**Skips:** Heavy prerequisites (GPU, EWF, large models, offline bundles) may skip in CI with explicit markers and summary counts. Skips must not be the only verification for a capability declared production-ready in the active release spec.
 
 ## Maturity Minimums
 
-Align with `versioning-release-management.mdc`:
+Align with `policies/versioning-release-management.md`:
 
-| Target | T0 | T1 | T2 | T3 human verification |
+| Target | L0 | L1 | L2 | L3 human verification |
 |--------|----|----|----|------------------------|
-| **0.x pre-MVP** | Documented `test` / `lint` | Lint + unit; grows by milestone | Optional integration / compose | Layer C; demo phases may use T2 |
-| **1.0.0 MVP** | Same | Contract tests for **MVP-required** surfaces (GUI/API/CLI/MCP per spec) | Compose smoke when applicable | Full checklist + annex + record; **T3** production validation |
+| **0.x pre-MVP** | Documented `test` / `lint` | Lint + unit when CI is added; grows by milestone | Optional | Layer C; Layer A for demos |
+| **1.0.0 MVP** | Same | Contract tests for MVP-required surfaces | Compose smoke when applicable | Full checklist + annex + execution record |
 | **1.x maintenance** | Same | Regression on declared surfaces | As needed | Per release scope |
 | **2.0.0 platform** | Same | Automation for declared production surfaces | Image scan on release artifacts | Full checklist + record |
 
-Repositories below their target bar must state gaps in README and milestone notes. Do not describe deferred CI or manual coverage as complete.
+Projects below their target must state the gaps in the README and milestone notes. Do not describe deferred CI or manual coverage as complete.
 
 ## Local Execution Standard
 
-Every application repository must document in `README.md` or `docs/developer-guide.md`:
+Once the stack is known, document in `README.md` or `docs/developer-guide.md`:
 
 - setup / install
-- **test** (fast, default for T0)
+- **test** (fast, the default L0 command)
 - **test-all** or **integration** (optional, heavy)
 - **lint** / format check
 - **container-build** or **compose-smoke** when Docker is in scope
 
-Use **one canonical entry point** per repo: either a thin `Makefile` / `justfile` wrapper or a single documented native command (`uv run pytest`, `npm test`). After intake and Spec Kit planning, replace template placeholders with project-specific commands.
+Use **one canonical entry point**: either a thin `Makefile` / `justfile` wrapper or a single documented native command (for example `uv run pytest` or `npm test`). Record it in `policies/project-context.md`.
 
-## GitHub Actions Program
+## GitHub Actions Conventions
 
-This template does not ship active workflows until the project stack is known (see `.github/workflows/README.md`). When adding workflows, use these conventions:
+This template ships no active workflows until the project stack is known (see `.github/workflows/README.md`). Ask the user before adding workflows that could consume significant Actions minutes or storage, and keep them appropriate for a free private repository: no unnecessary schedules, large artifacts, long-running jobs, paid add-ons, excessive caching, or Git LFS unless approved.
+
+When adding workflows, use these names:
 
 | Workflow file | Trigger | Role |
 |---------------|---------|------|
-| `ci.yml` | PR and push to default branch | T1 required checks |
+| `ci.yml` | PR and push to default branch | L1 required checks |
 | `security.yml` | PR, default branch, optional schedule | Dependency and image vulnerability scanning |
-| `release.yml` | Tags or manual dispatch | T3 packaging, SBOM, release scans |
+| `release.yml` | Tags or manual dispatch | L3 packaging, SBOM, release scans |
 | `docs.yml` | PR when a docs site exists | Documentation build |
 
-**Branch protection:** Required status check names must match real job names. Release-bound work must not merge on failed required checks.
-
-**Constraints:** No scheduled model downloads, large artifacts, or secrets in logs unless the release plan requires them. CI and committed fixtures use Tier T0 per `docs/test-data-handling.md`. Manual verification may use T1–T2 with a documented handling plan.
-
-**Org reuse:** Prefer `workflow_call` from a Project VIC organization `.github` repository when available. Copy examples from `docs/org-ci-reusable-workflows.md` and `docs/org-ci-reusable-workflows/examples/`; document the contract in `docs/developer-guide.md`.
-
-**Templates:** Copy `docs/ci-workflow-templates/` into `.github/workflows/` when not using org reusables yet.
-
-Affected surfaces (GUI, API, CLI, MCP, containers, ontology validation) must appear in T1 or T2 when declared for the product. See `four-surface-review.mdc`.
+- Pin third-party actions to a release tag or commit SHA.
+- Required status check names must match real job names. Release-bound work must not merge on failed required checks.
+- CI and committed fixtures use Tier T0 data. No secrets in logs.
+- Affected surfaces (GUI, API, CLI, MCP, containers, ontology validation) must appear in L1 or L2 when declared for the product.
 
 ## Security Scanning Layers
 
 Dependency and image scanners are **complementary**, not interchangeable.
 
 | Layer | Typical tool | Sees | Misses |
-|-------|----------------|------|--------|
-| Application dependencies | Dependabot, ecosystem alerts | Manifests and lockfiles | OS packages only in images |
-| Source patterns | CodeQL (when enabled) | Code vulnerabilities | Image-only packages |
-| Container images | Docker Scout, Trivy, Grype | Base OS, image layers | Dev-only deps not in image |
+|-------|--------------|------|--------|
+| Application dependencies | Dependabot, `pip-audit`, `npm audit` | Manifests and lockfiles | OS packages inside images |
+| Source patterns | CodeQL or similar (when enabled) | Code vulnerabilities | Image-only packages |
+| Container images | Trivy, Grype, Docker Scout | Base OS and image layers | Dev-only deps not in the image |
 
-**Rules:**
-
-1. **Containerized services:** run application dependency scanning **and** image scanning on built or published images.
-2. **Non-container libraries:** dependency scanning + tests; document image scan as N/A.
-3. **Triage:** fix, pin, replace, or waive with linked issue (`type:security`), expiry, and operator impact in `CHANGELOG.md` **Security** when release-relevant. Do not suppress findings without justification (`dependency-license-supply-chain.mdc`).
-4. **Release:** disposition of critical/high findings is recorded before tag; SBOM attached when release policy requires it.
+1. **Containerized services:** run application dependency scanning **and** image scanning on built images.
+2. **Non-container tools:** dependency scanning plus tests; mark image scanning N/A.
+3. **Triage:** fix, pin, replace, or waive with a linked `type:security` issue, an expiry date, and operator impact noted in `CHANGELOG.md` under **Security** when release-relevant. Do not suppress findings without justification (`policies/dependency-license-supply-chain.md`).
+4. **Release:** record the disposition of critical/high findings before tagging; attach an SBOM when release policy requires it.
 
 ## Test Types and Surfaces
 
-| Type | Typical tier | Notes |
-|------|----------------|-------|
-| Unit | T1 | Shared services (`architecture-boundaries.mdc`) |
-| Contract / schema | T1 | API, MCP, export fixtures |
-| CLI | T1 | Exit codes, stdout/stderr, output paths |
-| Integration | T2 | Services, DB, queues |
-| Compose e2e | T2 | Documented profiles (`backend`, `api`, `cpu`, etc.) |
-| GUI | T2 or T3 manual | Automated when feasible; otherwise manual checklist |
-| Ontology / SHACL | T1 or T2 | Per `ontology-alignment.mdc` |
-| Security | T1 + `security.yml` | Auth, path traversal, upload abuse |
-| Performance | T3 or `auto-research.mdc` | Claims require measured evidence |
+| Type | Typical level | Notes |
+|------|---------------|-------|
+| Unit | L0/L1 | Shared services (`policies/architecture-boundaries.md`) |
+| Contract / schema | L1 | API, MCP, export fixtures |
+| CLI | L1 | Exit codes, stdout/stderr, output paths |
+| Integration | L2 | Services, DB, queues |
+| Compose end-to-end | L2 | Documented profiles |
+| GUI | L2 or L3 manual | Automated when feasible; otherwise manual checklist |
+| Ontology / SHACL | L1 or L2 | Per `policies/ontology-alignment.md` |
+| Security | L1 + `security.yml` | Auth, path traversal, upload abuse |
+| Performance | L3 or `policies/auto-research.md` | Claims require measured evidence |
 
 ## Human Verification Program
 
-Automated tiers do not replace hands-on acceptance testing.
+Automated levels do not replace hands-on acceptance testing. The user testing the tool and giving the agent feedback is part of this program.
 
-**Layers:**
+- **Layer A, master:** `docs/manual-test-checklist.md` (stable, all apps).
+- **Layer B, release annex:** copy `docs/templates/manual-test-release-annex.md` into the release spec folder (for example `specs/003-Spec-v0.3.0/manual-test-release.md`) with milestone-specific scenarios.
+- **Layer C, change subset:** the pull request description lists the Layer A items re-run for the touched surfaces (`.github/pull_request_template.md`).
 
-- **Layer A — Master:** `docs/manual-test-checklist.md` (stable, all apps).
-- **Layer B — Release annex:** copy `docs/templates/manual-test-release-annex.md` into the release spec folder (e.g. `specs/003-Spec-v0.3.0/manual-test-release.md`) with milestone-specific scenarios.
-- **Layer C — Change subset:** PR template lists items re-run from Layer A for the touched surfaces.
+**Risk order when time is limited:** evidence integrity and honest failures, then auth/export leakage, release acceptance criteria, four-surface parity, deployment/offline smoke, ontology/exports, accessibility, and finally an exploratory charter.
 
-**Risk order when time is limited:** evidence integrity and honest failures → auth/export leakage → release acceptance criteria → four-surface parity → deployment/offline smoke → ontology/exports → accessibility → exploratory charter.
+**Test execution record:** before closing a release milestone, attach or link a record (see the appendix of the manual checklist) with version, environment, automation URLs, pass/fail summary, data tier, open issues, residual risks, and sign-off.
 
-**Test execution record:** Before closing a release milestone, attach or link a record (see manual checklist appendix) with version, environment, automation URLs, pass/fail summary, open issues, residual risks, and sign-off.
-
-**Distinction:** `human-review-and-risk-gates.mdc` covers code and design review before merge. This program covers product verification using the test data tier declared for the session (`docs/test-data-handling.md`).
+**Distinction:** `policies/human-review-and-risk-gates.md` covers code and design review before merge. This program covers product verification using the test data tier declared for the session.
 
 ## GitHub Hygiene
 
 - Use `type:test` for test gaps and `type:security` for scanner triage.
-- PRs reference resolved issues; include manual test subset when behavior is user-visible.
-- Milestone closure requires tests, documented manual verification, or an explicit deferral with release-note limitation (`versioning-release-management.mdc`).
+- Pull requests reference resolved issues and include the manual test subset when behavior is user-visible.
+- Milestone closure requires tests, documented manual verification, or an explicit deferral with a release-note limitation.
 
 ## Spec Kit Requirements
 
 For test-program-relevant work:
 
-- `/speckit.specify`: acceptance criteria, tiers affected, surfaces, scanner impact, human verification scope.
-- `/speckit.plan`: T0 commands, workflows to add or change, skip matrix, Layer B annex outline, branch protection checks.
+- `/speckit.specify`: acceptance criteria, levels affected, surfaces, scanner impact, human verification scope.
+- `/speckit.plan`: L0 commands, workflows to add or change, skip matrix, Layer B annex outline, required checks.
 - `/speckit.tasks`: tasks for local docs, workflows, fixtures, manual annex, PR template, changelog.
 - `/speckit.implement`: implement automation and docs together; no fake green CI.
-- `/speckit.analyze`: T0/T1 parity, scanner coverage, skip inventory vs release scope, human record for releases.
+- `/speckit.analyze`: L0/L1 parity, scanner coverage, skip inventory versus release scope, human record for releases.
 
 ## Required Agent Output
 
-When this rule is materially triggered, the final response must summarize tiers implemented or changed, canonical local commands, workflows and required checks, security scanning layers, human verification layer (A/B/C) and record status, skips and why, tests or validation run, documentation updated, maturity gaps vs target version, and deferred work not presented as complete.
+When this policy is materially triggered, the final response must summarize levels implemented or changed, canonical local commands, workflows and required checks, security scanning layers, human verification layer (A/B/C) and record status, skips and why, tests or validation run, documentation updated, maturity gaps versus the target version, and deferred work not presented as complete.

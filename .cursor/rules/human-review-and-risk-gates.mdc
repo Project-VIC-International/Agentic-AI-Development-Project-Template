@@ -1,13 +1,14 @@
 ---
-description: Require human review for high-risk Project VIC changes before merge or release
+description: Require explicit human review for high-risk changes before merge, release, or irreversible actions
 alwaysApply: true
 ---
+<!-- Generated from policies/human-review-and-risk-gates.md by scripts/sync_agent_rules.py. Edit the source policy, then re-run the script. -->
 
 # Human Review and Risk Gates
 
-High-risk Project VIC changes require explicit human review before merge or release. Agent productivity must not bypass human accountability for evidence, security, privacy, compliance, ontology, model, deployment, or release risk.
+High-risk changes require explicit human review before merge or release. Agent productivity must not bypass human accountability for evidence, security, privacy, compliance, ontology, model, deployment, or release risk.
 
-Agents must identify high-risk work, state why it is high risk, and summarize residual concerns.
+Agents must identify high-risk work, state why it is high risk, and summarize residual concerns. Agents must never approve their own high-risk work, and must not change permissions, hooks, CI, branch protection, or these policies to get around a review gate.
 
 ## High-Risk Changes
 
@@ -20,14 +21,16 @@ Human review is required for changes involving:
 - Model/AI inference, confidence thresholds, model updates, model downloads, or benchmark claims.
 - Dependency, license, container base, supply-chain, SBOM, or vulnerability changes.
 - GitHub Actions, release automation, versioning, changelog, release artifacts, or deployment profiles.
+- Repository visibility, collaborator access, tokens, or GitHub settings.
 - MCP tools that expose data, perform writes, trigger processing, or affect operator workflows.
-- Destructive operations, bulk changes, irreversible migrations, or broad refactors.
+- Changes to the policies in `policies/`, `AGENTS.md`, or any agent instruction file.
+- Destructive operations, bulk changes, force pushes, history rewrites, irreversible migrations, or broad refactors.
 
 ## Review Gates
 
 - No auto-merge for high-risk work.
 - Destructive or irreversible operations require extra review and clear operator confirmation patterns.
-- Security-relevant releases must not proceed with unresolved critical/high risks unless explicitly accepted by maintainers.
+- Security-relevant releases must not proceed with unresolved critical/high risks unless the project owner explicitly accepts them in writing.
 - Deferred work must not be described as complete.
 - CI failures, missing tests, skipped required surfaces, or undocumented migrations block release-bound work.
 
@@ -58,4 +61,3 @@ For high-risk work:
 ## Required Agent Output
 
 For high-risk changes, the final agent response must summarize risk category, why human review is required, affected protected data/surfaces, destructive or irreversible behavior, tests and mitigations, docs/release impact, residual concerns, and approval still needed.
-

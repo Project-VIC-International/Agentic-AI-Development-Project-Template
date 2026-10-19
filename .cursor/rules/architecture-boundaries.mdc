@@ -1,11 +1,14 @@
 ---
-description: Keep Project VIC application logic in shared service layers with clear architecture boundaries
-alwaysApply: true
+description: Keep application logic in shared service layers with clear architecture boundaries; read when planning architecture, adding modules, or wiring a new surface
+alwaysApply: false
 ---
+<!-- Generated from policies/architecture-boundaries.md by scripts/sync_agent_rules.py. Edit the source policy, then re-run the script. -->
 
 # Architecture Boundaries
 
-Project VIC applications must keep core behavior in shared, testable service/application layers. GUI, API, CLI/pipeline, and MCP surfaces are adapters over the same capability, not separate implementations.
+Applications must keep core behavior in shared, testable service/application layers. GUI, API, CLI/pipeline, and MCP surfaces are adapters over the same capability, not separate implementations.
+
+Do not start with a throwaway architecture that will be painful to extend. Build in small increments, but preserve the structure that lets users, agents, other software, and power users work with the tool.
 
 Architecture changes must preserve security, evidence integrity, ontology alignment, surface equivalence, and no-stubs behavior.
 
@@ -13,7 +16,7 @@ Architecture changes must preserve security, evidence integrity, ontology alignm
 
 - Business logic belongs in shared service/application layers.
 - GUI/API/CLI/MCP adapters should parse inputs, call shared services, translate outputs, and handle surface-specific presentation only.
-- Do not process evidence directly inside React components, FastAPI route handlers, MCP tool functions, or CLI argument parsing.
+- Do not process evidence directly inside UI components, HTTP route handlers, MCP tool functions, or CLI argument parsing.
 - Keep domain models, DTOs/contracts, persistence, ontology mapping, external-tool invocation, and UI state separate.
 - Surface adapters may vary interaction style, but must not change validation, authorization, provenance, audit, ontology, or error semantics.
 

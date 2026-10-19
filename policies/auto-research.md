@@ -1,0 +1,110 @@
+---
+description: Experiment-driven (autoresearch) loop for measured performance or detection-quality improvement after a feature works; ask the user before running it
+globs: ["**/benchmarks/**", "**/bench/**", "**/eval/**", "**/*perf*", "**/*benchmark*"]
+alwaysApply: false
+---
+
+# Autoresearch: Experiment-Driven Improvement
+
+Do not optimize by intuition alone when performance is part of the requirement.
+
+After a feature meets its functional spec, use an experiment-driven loop (often called "autoresearch") for measurable improvements: form one measurable hypothesis, change one variable, benchmark the result, and keep only verified improvements.
+
+Correctness, forensic integrity, security, privacy, provenance, ontology alignment, and operator trust take priority over speed.
+
+## Ask Before Running
+
+When you see an opportunity, describe it to the user in terms of their tool's work (for example "hashing 10,000 synthetic images takes 4 minutes; target is under 1 minute") and **ask whether to run the loop now**. Experiments use time, compute, and possibly paid model usage. Do not start a loop the user has not approved.
+
+## When This Policy Applies
+
+Use this loop when:
+
+- A spec defines a performance or quality threshold.
+- The user requests performance or accuracy improvement.
+- A feature processes large media collections, hash sets, archives, reports, exports, model inference, or GUI result sets.
+- A bottleneck affects investigator usability, batch throughput, offline operation, or deployment feasibility.
+- Release notes or changelog entries will claim a measurable improvement.
+
+Measurable targets include runtime, throughput, latency, memory use, accuracy/recall/precision/error rates, search quality, export or validation speed, batch processing cost, UI render time, test suite duration, file size, storage use, and network transfer.
+
+Do not run the loop for ordinary feature work, typo fixes, small correctness bugs, documentation-only edits, or security fixes unless performance is part of the acceptance criteria. Do not run it before correctness is established, for safety-critical operator wellbeing controls where review matters more than optimization, or when the environment cannot measure the metric responsibly.
+
+## Loop
+
+1. Read the spec threshold, acceptance criteria, and current benchmark baseline.
+2. Identify the bottleneck with measurement before changing code.
+3. Hypothesize one measurable change.
+4. Implement the change in isolation (a branch, git worktree, or parallel agent attempt such as best-of-N, if the user's agent supports it).
+5. Measure with the same dataset, hardware profile, configuration, command, and version baseline.
+6. Compare before/after results.
+7. Keep only verified improvements that preserve correctness and required behavior.
+8. Add or update regression protection.
+9. Ratchet the spec floor only when the improvement is merged and realistic for the intended deployment.
+
+## Typical Targets in Forensic Tools
+
+Media discovery, hashing, known-hash lookup matching, archive preprocessing, forensic image handling, video frame sampling, object detection or model inference throughput, OCR or transcription pipelines, artifact generation, JSON/CSV/XLSX/JSON-LD/Turtle/RDF/report export speed, CASE/UCO/CAC validation speed, API job throughput, CLI batch processing, MCP tool latency, GUI result rendering at scale, Docker startup, CPU-only fallback performance, and GPU utilization or memory behavior.
+
+## Safety and Correctness Requirements
+
+Never keep a performance improvement that changes investigative meaning, mutates source evidence, skips required validation, weakens authentication or authorization, drops audit or provenance events, removes ontology-aligned output, changes report/export semantics without a spec update, hides errors, creates fake success paths, breaks CPU-only operation unless explicitly approved, increases minimum hardware requirements without documentation and approval, requires internet access in offline or air-gapped workflows, leaks sensitive data in benchmark logs, or reduces accessibility or operator clarity.
+
+Performance improvements must preserve the no-stubs, security, ontology-alignment, cross-platform, four-surface, and release-management policies.
+
+## Benchmark Data
+
+- Use benign synthetic or approved non-sensitive datasets (Tier T0/T1 during the course).
+- Never use real CSAM, real victim data, real agency data, real case identifiers, or sensitive investigative material in benchmark fixtures, logs, screenshots, or reports.
+- Record dataset size, file counts, media types, archive types, hash counts, model names, and relevant configuration.
+- If synthetic data is used, describe how it approximates the operational workload; if it does not represent real-world use, say so.
+
+## Hardware and Deployment Profiles
+
+Record the hardware and deployment profile for each experiment: CPU model, RAM, GPU model and VRAM, driver/runtime version, operating system, WSL/Linux/Docker profile, storage type, container image or environment, CPU-only versus GPU mode, model precision or quantization, offline profile, and relevant environment variables.
+
+Do not optimize only for high-end GPUs if intended users include investigators with modest hardware. Maintain realistic baselines for CPU-only and modest workstation deployments where applicable.
+
+## Experiment Rules
+
+- One experiment changes one variable.
+- Measure before changing code.
+- Use the same command, dataset, configuration, and hardware profile for before/after comparisons.
+- Run enough repetitions to avoid obvious noise when the benchmark is short or variable.
+- Record wall-clock time, throughput, memory use, error rate, and output equivalence where applicable.
+- Stop after at least three consecutive low-value experiments or when the bottleneck is outside the module.
+- Do not keep code that adds complexity without measurable benefit.
+- Do not merge experimental branches that lack tests, documentation, or reproducible results.
+
+## Output Equivalence
+
+For performance work that changes processing, exports, or rendering, verify that source evidence remains read-only, derived artifacts stay in approved locations, hashes/classifications/detections/reports/exports remain semantically consistent, CASE/UCO/CAC/SOLVE-IT output still validates, GUI/API/CLI/MCP still expose equivalent behavior, and errors remain actionable and safe.
+
+## Research Logs
+
+Store experiment records in the release spec's `research.md`, `benchmarks/results/`, or another documented repository location.
+
+Each record includes hypothesis, changed variable, commit or branch, benchmark command, dataset description, hardware profile, software/container version, before metrics, after metrics, output-equivalence result, decision (keep, reject, retry, or defer), and the reason.
+
+## Regression Protection
+
+When an improvement merges:
+
+- Add or update a benchmark, regression test, CI check, or documented manual verification step.
+- Update spec thresholds when the new floor is realistic for the intended deployment.
+- Update documentation if hardware, configuration, or operator guidance changes.
+- Update `CHANGELOG.md` and release notes with before/after measurements and test conditions when the improvement is user-visible or operationally relevant.
+
+## Spec Kit Requirements
+
+For performance-relevant work:
+
+- `/speckit.specify`: define the target, affected users, workload, dataset assumptions, hardware/deployment tier, correctness requirements, and success threshold.
+- `/speckit.plan`: define the benchmark method, baseline command, metrics, profiling approach, safety checks, and regression protection.
+- `/speckit.tasks`: create tasks for profiling, experiments, implementation, validation, documentation, changelog, and release notes.
+- `/speckit.implement`: run measured experiments and keep only verified improvements.
+- `/speckit.analyze`: verify the improvement is real, reproducible, safe, documented, tested, and aligned with the spec.
+
+## Required Agent Output
+
+For performance-relevant changes, the final agent response must summarize the baseline, bottleneck, experiment, variable changed, dataset, hardware/deployment profile, before/after metrics, correctness and output-equivalence checks, whether the change was kept or rejected, regression protection added, and spec threshold/changelog/docs/release notes updated.
