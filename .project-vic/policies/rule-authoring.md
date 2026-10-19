@@ -1,0 +1,53 @@
+
+# Rule Authoring
+
+Project VIC Cursor rules are governance artifacts. They should help agents make safe, consistent engineering decisions without creating contradictions, excessive noise, or false authority.
+
+Use this rule when creating, reviewing, splitting, or maintaining `.cursor/rules/*.mdc` files.
+
+## Rule Scope
+
+- Prefer project-wide rules for mission standards: security, evidence integrity, ontology alignment, no-stubs behavior, release discipline, synthetic data, and human review.
+- Prefer scoped or nested rules for stack-specific guidance, repository-local commands, framework conventions, or narrow file patterns.
+- Do not make every rule `alwaysApply: true` if it only applies to a narrow area.
+- Repository-local context rules should supplement, not override, Project VIC-wide standards.
+- If a rule is only for docs, GUI, API, MCP, model, database, or release files, use `globs` where practical.
+- Reusable Project VIC standard rules should avoid repo-specific product names unless the rule is intentionally product-specific.
+- Repository-local rules should name the repository, stack, commands, and local paths clearly.
+
+## Rule Precedence
+
+Rules should align with `project-vic-rule-index.mdc`. If adding new precedence guidance, update the index instead of creating conflicting local hierarchies.
+
+When rules overlap, prefer the stricter safety/evidence/security requirement and the more specific implementation rule for the touched surface.
+
+## Rule Quality
+
+- Keep rules focused and actionable.
+- State what agents must do, what they must not do, and what final output is required when the rule is materially triggered.
+- Include Spec Kit hooks when the rule affects non-trivial development.
+- Prefer clear operational requirements over broad values statements.
+- Avoid duplicating long sections from other rules; reference the other rule by name when possible.
+- Avoid conflicting rules. If rules appear to conflict, identify precedence and update the rules.
+
+## Frontmatter
+
+Each rule must include valid `.mdc` frontmatter:
+
+- `description`: concise, specific summary.
+- `alwaysApply`: true only for broad standards.
+- `globs`: include when rule applies to specific paths or file types.
+
+Descriptions should be Project VIC-wide only when the rule is intended for reuse across Project VIC repositories.
+
+## Maintenance
+
+- Update rules when repeated agent failures occur.
+- Update rules when Project VIC standards, Spec Kit workflow, compliance expectations, or architecture practices change.
+- Keep rule language aligned with the Spec Kit constitution where appropriate.
+- Do not edit generated sections casually; preserve generated blocks unless intentionally regenerating them.
+- When rules change operational behavior, consider documentation, changelog, and release impact.
+
+## Required Agent Output
+
+For rule-authoring changes, the final agent response must summarize rules created or changed, scope/alwaysApply/glob decisions, conflicts considered, Spec Kit/constitution links, and any follow-up rules that should be split or consolidated.

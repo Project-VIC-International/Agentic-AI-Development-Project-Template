@@ -1,0 +1,73 @@
+
+# Ontology Alignment
+
+Project VIC software outputs, APIs, reports, exports, generated artifacts, model outputs, and provenance records must remain defensible, explainable, and interoperable with Project VIC and digital investigation ecosystems.
+
+Project VIC tools may use internal application schemas when appropriate, but externally meaningful data must have documented mappings to CASE/UCO/CAC/SOLVE-IT concepts where suitable.
+
+## Required Ontology Grounding
+
+- Use Cyber-investigation Analysis Standard Expression (CASE) and Unified Cyber Ontology (UCO), commonly referenced together as CASE/UCO.
+- Use CASE for cyber-investigation concepts, investigative actions, provenance, roles, and investigation-oriented exchange.
+- Use UCO for cyber observables, actions, analysis, configuration, core cyber-domain concepts, identity, location, markings, patterns, roles, time, tools, data types, and shared cyber-domain vocabulary.
+- Use the Crimes Against Children (CAC) Ontology for crimes-against-children investigations, operations, grooming, sextortion, victim advocacy, offender tradecraft, ICAC/task-force concepts, cross-jurisdictional concepts, legislative-process concepts, and other CAC-specific topics.
+- Use SOLVE-IT concepts for digital forensic techniques, weaknesses, mitigations, objectives, performed techniques, tool capabilities, and tool-profile descriptions when documenting analysis methods.
+- Do not invent ad-hoc field names in CASE/UCO/CAC/SOLVE-IT exports when a canonical class or property exists.
+- Do not invent ontology classes, properties, prefixes, IRIs, or namespaces. Verify terms against ontology source, generated docs, SDK bindings, or checked-in ontology artifacts before using them.
+- If a needed concept is absent from CASE/UCO/CAC/SOLVE-IT, document the gap and prefer upstream extension over local vocabulary drift.
+
+## Source of Truth
+
+When mapping concepts, prefer sources in this order:
+
+1. Checked-in ontology/version artifacts pinned by the repository.
+2. Generated language bindings or mapping helpers from the CASE/UCO SDK.
+3. Official ontology documentation and source repositories.
+4. Existing Project VIC mappings in the repository.
+5. New extension proposal or documented gap.
+
+Official sources:
+
+- CASE Ontology: https://github.com/casework/CASE.git
+- Unified Cyber Ontology: https://github.com/ucoProject/UCO.git
+- Crimes Against Children Ontology: https://github.com/Project-VIC-International/CAC-Ontology
+- CASE/UCO SDK: https://github.com/vulnmaster/CASE-UCO-SDK.git
+
+Use the CASE/UCO SDK and its MCP server (`case-uco`) to help automate class, property, relationship mapping, data serialization, and SHACL validation where available.
+
+Use the CASE/UCO SDK to get or update ontology bindings for Python, Java, C#, and Rust projects.
+
+Reference the CASE/UCO SDK docs folder and `ECOSYSTEM.md` to understand available CASE/UCO open-source capabilities for developers.
+
+When CASE/UCO/CAC/SOLVE-IT do not provide adequate concept coverage, develop extension ontologies instead of creating isolated local vocabularies. Follow the Community Playground Guidelines.
+
+## Project VIC Mapping Requirements
+
+- Model analytic detections, classifier results, object detections, media classifications, model outputs, and confidence values as analytic results with model/tool provenance.
+- Hashing and Project VIC lookup features must distinguish legacy lookup hashes such as MD5 from forensic integrity hashes such as SHA-256.
+- Forensic image mounting, archive extraction, frame sampling, media preprocessing, OCR, transcription, object detection, hash lookup, deduplication, and export generation are provenance actions.
+- Output artifacts (`JSON`, `CSV`, `XLSX`, `JSON-LD`, Turtle, RDF, reports, and API responses) must point back to source media, source records, and the action or process that produced them when those outputs are intended for investigative, evidentiary, audit, or interop use.
+- Preserve identifiers needed to trace derived artifacts back to source evidence without exposing sensitive values unnecessarily.
+- Keep human-readable reports and machine-readable exports aligned. Do not allow a report to say something materially different from the serialized data.
+
+## Validation
+
+- Keep SHACL validation available for CASE/UCO/CAC/SOLVE-IT output where applicable.
+- Add or update fixtures when export shapes, report schemas, ontology mappings, or serialization formats change.
+- Specs that alter artifact schemas must include ontology impact, validation commands, migration notes, and backward-compatibility considerations.
+- Validation failures must be treated as implementation defects unless the spec documents a deliberate unsupported mapping or open ontology gap.
+- Tests must use benign synthetic data. Do not use real CSAM, real victim data, real case identifiers, or sensitive investigative details in ontology fixtures, examples, screenshots, or docs.
+
+## Spec Kit Requirements
+
+For schema, export, report, API, model-output, or evidence-processing changes:
+
+- `/speckit.specify`: identify domain concepts, data categories, intended consumers, required exports, and candidate CASE/UCO/CAC/SOLVE-IT mappings.
+- `/speckit.plan`: define concrete mappings, prefixes, ontology versions, serialization formats, validation commands, migration concerns, and unmapped gaps.
+- `/speckit.tasks`: create implementation and test tasks for mapping, serialization, validation, fixtures, docs, and migration notes.
+- `/speckit.implement`: implement mappings and validation using real ontology terms, not placeholders.
+- `/speckit.analyze`: verify code, schema, fixtures, docs, examples, and changelog remain aligned with the ontology mapping.
+
+## Required Agent Output
+
+For ontology-relevant changes, the final agent response must summarize new or changed data concepts, ontologies and versions consulted, classes and properties used, local fields that intentionally remain unmapped, validation commands run, fixtures and examples updated, migration or backward-compatibility concerns, and open ontology gaps or proposed extension work.

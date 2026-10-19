@@ -7,9 +7,10 @@ You are helping me use the Project VIC Agentic AI Development Project Template.
 
 First, read:
 - README.md
-- START-HERE-NCCC.md
+- START-HERE.md
 - QUICKSTART.md
 - SECURITY.md
+- docs/mandatory-policy-corpus.md
 - docs/agent-expectations.md
 - docs/spec-kit-workflow.md
 - docs/synthetic-test-data.md

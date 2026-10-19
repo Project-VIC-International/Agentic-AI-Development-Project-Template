@@ -1,0 +1,71 @@
+{
+  "$schema": "./schemas/adapter-matrix.schema.json",
+  "schema_version": 1,
+  "researched_at_utc": "2026-08-11",
+  "policy_delivery_guarantee": "Exact canonical policy bytes are embedded or loaded by a vendor-documented native mechanism; model behavior is not guaranteed.",
+  "tools": {
+    "cursor": {
+      "mechanism": ".cursor/rules/*.mdc",
+      "strategy": "byte-exact upstream rule files",
+      "native_files": [".cursor/rules/*.mdc"],
+      "important_limit": "selection uses alwaysApply, description, and globs",
+      "sources": ["https://cursor.com/docs/rules"]
+    },
+    "codex": {
+      "mechanism": "AGENTS.md plus trusted .codex/config.toml",
+      "strategy": "full exact bodies embedded in AGENTS.md",
+      "native_files": ["AGENTS.md", ".codex/config.toml"],
+      "important_limit": "default project instruction limit is 32 KiB; project trust and 262144-byte setting are required",
+      "sources": ["https://learn.chatgpt.com/docs/agent-configuration/agents-md", "https://learn.chatgpt.com/docs/config-file/config-advanced"]
+    },
+    "claude": {
+      "mechanism": "CLAUDE.md @path imports",
+      "strategy": "imports all exact canonical files",
+      "native_files": ["CLAUDE.md"],
+      "important_limit": "instructions are context, not enforced configuration",
+      "sources": ["https://code.claude.com/docs/en/memory"]
+    },
+    "copilot": {
+      "mechanism": ".github/copilot-instructions.md and .github/instructions/*.instructions.md",
+      "strategy": "one global instruction file per exact policy body",
+      "native_files": [".github/copilot-instructions.md", ".github/instructions/*.instructions.md"],
+      "important_limit": "support and combination behavior vary by Copilot surface and IDE",
+      "sources": ["https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions"]
+    },
+    "gemini": {
+      "mechanism": "GEMINI.md @path imports",
+      "strategy": "imports all exact canonical files",
+      "native_files": ["GEMINI.md"],
+      "important_limit": "hierarchical context can add more-specific instructions",
+      "sources": ["https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/gemini-md.md"]
+    },
+    "hermes": {
+      "mechanism": ".hermes.md project context",
+      "strategy": "full exact bodies embedded in highest-priority project context file",
+      "native_files": [".hermes.md"],
+      "important_limit": "context_file_max_chars or dynamic model limit must accommodate the full file without truncation",
+      "sources": ["https://hermes-agent.nousresearch.com/docs/user-guide/features/context-files"]
+    },
+    "opencode": {
+      "mechanism": "opencode.json instructions glob",
+      "strategy": "loads all exact canonical files",
+      "native_files": ["opencode.json"],
+      "important_limit": "other local and global instructions are combined and require conflict review",
+      "sources": ["https://opencode.ai/docs/rules/"]
+    },
+    "zed": {
+      "mechanism": "root .rules",
+      "strategy": "full exact bodies embedded",
+      "native_files": [".rules"],
+      "important_limit": "nested and user rules can add guidance; verify in Agent Panel",
+      "sources": ["https://github.com/zed-industries/zed/blob/main/docs/src/ai/rules.md", "https://zed.dev/docs/ai/instructions"]
+    },
+    "warp": {
+      "mechanism": "root AGENTS.md",
+      "strategy": "full exact bodies embedded",
+      "native_files": ["AGENTS.md"],
+      "important_limit": "WARP.md takes precedence when both names exist in one directory",
+      "sources": ["https://docs.warp.dev/agents/capabilities/rules/"]
+    }
+  }
+}

@@ -1,0 +1,89 @@
+
+# Cross-Platform and Deployment Compatibility
+
+Project VIC tools are built for investigators, digital forensics examiners, task forces, nonprofits, and agencies with widely varying technical resources. Tools must support users on Windows workstations, Linux hosts, WSL, Docker-compatible systems, GPU servers, offline systems, and air-gapped environments.
+
+Cross-platform does not mean every component must run natively on every operating system. It means Project VIC tools must provide a supported path for common platforms, with Ubuntu/Linux containers as the default free-first baseline.
+
+Project VIC tools must not require paid operating systems, paid cloud services, paid databases, paid queues, paid identity providers, or proprietary commercial infrastructure unless explicitly documented as optional.
+
+## Free-First and Dependency Isolation
+
+- Prefer free and open-source operating systems, runtimes, databases, queues, containers, and development tools.
+- Ubuntu/Linux container support is the default deployment baseline unless the repository explicitly documents another baseline.
+- Do not require global installation of language runtimes, Python packages, Node packages, system libraries, model weights, or forensic tools when a containerized, virtualenv, venv, uv, pipx, Conda, or documented isolated environment is feasible.
+- Local development setup must avoid polluting the user's workstation.
+- Runtime artifacts, caches, logs, temporary files, extracted content, generated files, and model downloads must stay under documented project, case, cache, or run directories.
+- Do not assume internet access during install, startup, inference, validation, or normal operation unless the feature explicitly requires it.
+
+## Path Handling
+
+- Use `pathlib.Path` in Python and platform-safe path handling in API, GUI, and frontend code.
+- Never concatenate filesystem paths with raw `/` or `\\` strings.
+- Normalize and validate evidence paths before use; reject traversal and paths outside allowed roots.
+- Preserve source evidence read-only. Do not write to mounted evidence, forensic images, original media, or operator-selected source directories unless explicitly documented and confirmed.
+- Handle Windows, WSL, Linux, and container path differences explicitly.
+- Do not assume case-insensitive filesystems.
+- Do not assume Unix permissions are preserved on Windows-mounted paths.
+- Handle spaces, Unicode, long paths, reserved Windows filenames, and path separators safely.
+- Avoid hardcoded `/tmp`, `/home`, drive letters, user profile paths, or shell-specific behavior.
+- Normalize timestamps and time zones in logs, exports, audit records, reports, and generated artifacts.
+
+## Process and External Tools
+
+- Invoke external tools with argument arrays, not shell strings.
+- Do not use `shell=True` or shell pipelines unless there is a documented reason and inputs are strictly controlled.
+- Detect `ffmpeg`, EWF/mount tooling, archive tools, OCR engines, GPU availability, Docker, model weights, ontology files, and other optional dependencies before use.
+- Surface actionable errors when optional dependencies are absent.
+- Do not silently skip required processing steps because a dependency is missing.
+- External tool versions that affect output, provenance, or reproducibility must be logged or recorded in job metadata.
+- Commands that touch evidence, derived artifacts, exports, or mounted filesystems must preserve provenance and avoid mutating source evidence.
+
+## Containers and Deployment
+
+- Project VIC services should be container-first unless the repository documents why native deployment is required.
+- Docker Compose profiles such as `backend`, `api`, `gui`, `worker`, `edge`, `gpu`, and `dev` must remain independently usable when provided.
+- Container services must support documented environment-variable configuration and must not require source-code edits for normal deployment.
+- Container-created files must not become unusable by the host user. Document UID/GID behavior and support configurable user IDs where needed.
+- Do not assume root access inside or outside containers unless explicitly required and documented.
+- Avoid writing generated files as root into bind-mounted host directories.
+- Exposed ports, volumes, mounts, profiles, and network assumptions must be documented.
+- Production deployment paths must not depend on development-only bind mounts, debug servers, auto-reload behavior, or permissive CORS settings.
+- Windows clients and WSL/Linux paths must be documented where behavior differs.
+
+## CPU, GPU, and Model Runtime Compatibility
+
+- CPU-only mode must remain valid unless the feature is explicitly documented as GPU-only.
+- GPU support is an acceleration path, not a hard requirement.
+- GPU availability must be detected at runtime.
+- NVIDIA CUDA, ROCm, DirectML, Metal, or other GPU-specific paths must not break CPU-only operation.
+- Model inference code must document hardware assumptions, memory requirements, fallback behavior, and expected degradation when GPU acceleration is unavailable.
+- GPU-specific containers or profiles must fail cleanly when required drivers, runtimes, or devices are unavailable.
+
+## Offline and Air-Gapped Operation
+
+- Air-gapped deployments must not download packages, containers, models, fonts, JavaScript assets, telemetry libraries, external schemas, or validation assets at runtime.
+- Provide documented ways to prefetch, mirror, vendor, or bundle required images, packages, model weights, ontology files, schemas, and validation assets.
+- Features requiring internet access must be optional or fail closed with clear operator guidance.
+- Do not add telemetry, analytics, crash reporting, auto-update checks, or external callbacks unless explicitly documented, disabled by default, and appropriate for law-enforcement deployment.
+- Offline mode must preserve authentication, authorization, audit logging, evidence integrity, validation, and export behavior.
+
+## Configuration
+
+- Configuration must be explicit, documented, and environment-driven where practical.
+- Do not hardcode hostnames, ports, credentials, model paths, evidence paths, user directories, or agency-specific assumptions.
+- Provide safe defaults for local development, but do not silently disable authentication, authorization, audit logging, or evidence protections in production-like profiles.
+- Missing or invalid configuration must produce actionable errors.
+
+## Testing
+
+- CI should validate Linux container builds and frontend/API tests.
+- Where practical, CI should include platform-relevant checks for Linux and Windows path behavior.
+- Any platform-specific behavior needs explicit tests or documented manual verification.
+- Integration tests that require GPU, Docker, ffmpeg, EWF tooling, mounted forensic images, model weights, or other heavy prerequisites must skip cleanly when prerequisites are unavailable.
+- Tests must verify that source evidence remains read-only and that derived artifacts stay inside approved case/run/output directories.
+- Tests must use benign synthetic data and must not require real CSAM, real victim data, real case identifiers, or agency-sensitive evidence.
+
+## Required Agent Output
+
+For platform-relevant changes, the final agent response must summarize supported execution paths affected, host platforms considered, container profiles affected, new runtime dependencies, CPU/GPU behavior, offline or air-gapped impact, path/permission/mount behavior, tests added or skipped, documentation updated, and known platform limitations.

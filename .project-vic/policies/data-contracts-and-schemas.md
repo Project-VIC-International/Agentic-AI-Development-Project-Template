@@ -1,0 +1,56 @@
+
+# Data Contracts and Schemas
+
+Project VIC data contracts must remain stable, documented, deterministic, and aligned across GUI, API, CLI/pipeline, MCP, reports, exports, persistence, and ontology outputs.
+
+Do not rename, remove, reinterpret, or reshape fields casually. Contract drift can break investigator workflows, lab integrations, scripts, MCP agents, ontology validation, and release trust.
+
+## Contract Surfaces
+
+Keep these aligned when behavior or data shape changes:
+
+- API request/response schemas, OpenAPI contracts, and error objects.
+- Pydantic/SQLModel/domain models and DTOs.
+- TypeScript types and GUI client models.
+- CLI arguments, stdout/stderr conventions, exit codes, and JSON output.
+- MCP tool schemas, resource shapes, prompts, and structured results.
+- JSON, CSV, XLSX, JSON-LD, Turtle/RDF, reports, and generated artifacts.
+- Database schema, migration scripts, and persisted artifact metadata.
+
+## Schema Change Rules
+
+- Schema changes require migration notes or explicit reset guidance.
+- Breaking changes require SemVer major-version consideration and migration guidance.
+- Additive backward-compatible fields should be preferred when practical.
+- Machine-readable outputs must be deterministic and documented.
+- Field names, enum values, IDs, timestamps, hashes, confidence values, and provenance links must keep the same meaning across surfaces.
+- Nullable, optional, defaulted, deprecated, and removed fields must be intentional and documented.
+- Do not expose sensitive evidence paths, victim identifiers, or protected case details unless required and approved.
+
+## Ontology and Export Requirements
+
+- CASE/UCO/CAC/SOLVE-IT exports must use verified ontology terms and include validation examples where applicable.
+- JSON-LD/RDF outputs need stable prefixes, IRIs, contexts, and SHACL validation where applicable.
+- Reports and exports must point back to source media/records and the action or process that produced them when used for investigative, evidentiary, audit, or interoperability purposes.
+- Human-readable reports must not make claims that differ materially from machine-readable outputs.
+
+## Tests and Fixtures
+
+- Add or update fixtures for every exported artifact shape and public contract change.
+- Tests must cover success, invalid input, missing field, unknown field, backwards-compatibility, and error behavior where applicable.
+- Committed contract fixtures must use Tier T0/T1 per `docs/test-data-handling.md`.
+- Golden files are acceptable when deterministic and reviewed; update them only when the schema change is intentional.
+
+## Spec Kit Requirements
+
+For contract-relevant work:
+
+- `/speckit.specify`: identify affected schemas, consumers, compatibility expectations, sensitive fields, and ontology/export impact.
+- `/speckit.plan`: define contract changes, versioning, migration notes, validation commands, fixture updates, and deprecation strategy.
+- `/speckit.tasks`: create tasks for each affected surface, schema, fixture, validation, docs, changelog, and migration guidance.
+- `/speckit.implement`: update contracts and tests together; do not leave generated types, docs, or examples stale.
+- `/speckit.analyze`: verify all contract surfaces remain aligned and breaking changes are documented.
+
+## Required Agent Output
+
+For contract-relevant changes, the final agent response must summarize changed schemas, affected surfaces, compatibility impact, fixtures/tests updated, ontology validation impact, migration notes, and whether a version bump or changelog entry is needed.

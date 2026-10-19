@@ -8,7 +8,7 @@ It is a companion to the [Project VIC International Agentic AI Development Cours
 
 1. Create a private repository from this template.
 2. Open your private repository in Cursor.
-3. Read `START-HERE-NCCC.md`.
+3. Read `START-HERE.md`.
 4. Paste the prompt in `prompts/START-CURSOR-HERE.md`.
 5. Complete `intake/problem-intake.md`.
 6. Ask Cursor to review the intake and draft a milestone plan.
@@ -51,7 +51,7 @@ Applications should be designed so they can later process real mission data in a
 
 Start with:
 
-- `START-HERE-NCCC.md` for the NCCC lab path.
+- `START-HERE.md` for the conference and workshop path.
 - `QUICKSTART.md` for the first-session path.
 - `docs/tooling-setup.md` for optional setup scripts and tool installation.
 - `docs/github-setup.md` for GitHub and GitHub CLI.
@@ -63,12 +63,12 @@ Start with:
 ## Documentation Map
 
 - Workflow: `docs/spec-kit-workflow.md`, `docs/development-workflow.md`, and `.cursor/rules/`.
-- Course integration: `docs/course-integration.md`, `START-HERE-NCCC.md`, and `prompts/START-CURSOR-HERE.md`.
-- Agent guidance: `docs/agent-expectations.md` and `.cursor/rules/`.
+- Course integration: `docs/course-integration.md`, `START-HERE.md`, and `prompts/START-CURSOR-HERE.md`.
+- Agent guidance: `docs/mandatory-policy-corpus.md`, `docs/agent-expectations.md`, and `.cursor/rules/`.
 - Planning: `planning/milestone-plan-template.md`, `planning/issue-template.md`, `planning/release-roadmap-template.md`, and `examples/sample-milestone-plan.md`.
 - Data and interoperability: `docs/synthetic-test-data.md`, `docs/case-uco-cac-guidance.md`, `examples/README.md`, and `examples/synthetic-data/README.md`.
 - Security and permissions: `SECURITY.md`, `docs/permissions-troubleshooting.md`, `docs/github-setup.md`, and `docs/cursor-setup.md`.
 - Automation and setup: `docs/tooling-setup.md`, `scripts/`, and `.github/workflows/README.md`.
 
-The `.cursor/rules/` folder encodes the Project VIC expectations that the user's agent should follow. Ask the agent to summarize those rules before starting a real project.
+Development agents follow the pinned Project VIC mandatory policy corpus. Cursor uses `.cursor/rules/`. Claude Code, GitHub Copilot, Gemini CLI, Hermes, OpenCode, Zed, Codex, and Warp use the matching adapter files. The pin, policy count, and shared-file note are in `docs/mandatory-policy-corpus.md`. Ask the agent to summarize those policies before starting a real project.
 

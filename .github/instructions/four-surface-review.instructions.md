@@ -1,0 +1,121 @@
+---
+applyTo: "**"
+---
+
+
+# Four-Surface Capability Review
+
+Project VIC applications should expose major capabilities through four user and automation surfaces:
+
+1. GUI / UI
+2. API
+3. CLI / pipeline
+4. MCP server
+
+The four surfaces do not need identical interaction patterns, but they must provide equivalent access to the same core capability, validation rules, authorization model, ontology mappings, provenance behavior, audit events, outputs, and error semantics.
+
+Silent surface drift is incomplete work.
+
+**`1.0.0` MVP:** When intake, the release spec, and users require it, the MVP must provide applicable four-surface equivalence for declared MVP capabilities. Record required surfaces in MVP exit criteria and the release target section. If MVP intentionally omits a surface, document the gap, supported alternative, and operator impact.
+
+**`2.0.0` platform / enterprise:** By default, Project VIC tools provide applicable four surfaces for declared production capabilities unless a maintainer designates a surface as unnecessary. This is the usual target for org-wide production-intent parity.
+
+**Before `1.0.0`:** Missing surfaces are allowed when documented per milestone. **`1.x.x`** may add surfaces toward `2.0.0` without requiring all four at every patch.
+
+This rule applies to Project VIC applications and services. Libraries, documentation-only repositories, ontology-only repositories, and internal build utilities may document why one or more surfaces are not applicable.
+
+## Required Surfaces
+
+| Surface | Primary users | Expected role |
+|---|---|---|
+| GUI / UI | ICAC investigators, forensic examiners, analysts, and operators | Human-facing workflows, visibility, review, configuration, reporting, and operational control |
+| API | GUI clients, lab systems, integrations, scripts, and service-to-service workflows | Programmatic access, job control, schemas, status, artifacts, auth, and integration contracts |
+| CLI / pipeline | Batch processing, offline operation, worker containers, direct operator runs, and automation scripts | Scriptable execution, local processing, container entry points, diagnostics, and reproducible workflows |
+| MCP server | AI agents, investigator assistants, triage agents, and tool-using automation | Agent-safe tools, resources, prompts, structured outputs, and ontology-grounded automation |
+
+## Shared Core Logic
+
+- Business logic must live in shared application/service layers.
+- GUI, API, CLI, and MCP surfaces should call the same underlying services rather than reimplementing feature logic independently.
+- Validation, authorization, provenance creation, audit logging, ontology mapping, export generation, and error handling must be consistent across surfaces.
+- Surface-specific adapters may translate inputs and outputs, but they must not change the meaning of the operation.
+- If a capability is intentionally unavailable on a surface, document why, describe the supported alternative, identify whether the gap is temporary or permanent, and name the human decision or milestone that justifies it.
+- Do not create placeholder GUI/API/CLI/MCP surfaces merely to satisfy this rule. Missing surfaces must fail honestly or remain undiscoverable until implemented.
+
+## Surface Equivalence Requirements
+
+When adding, changing, refactoring, or removing a capability, review all four surfaces.
+
+### GUI / UI
+
+- Does the operator need visibility, controls, filters, warnings, progress, review screens, or clearer terminology?
+- Are errors actionable for investigators and forensic examiners?
+- Are sensitive values redacted or minimized?
+- Are outputs, reports, and status indicators consistent with API, CLI, and MCP behavior?
+- Does the GUI use terminology aligned with CASE/UCO/CAC/SOLVE-IT concepts where applicable?
+
+### API
+
+- Does the capability require a new or changed endpoint, request schema, response schema, auth requirement, job status, artifact reference, or error response?
+- Are OpenAPI or other API contracts updated?
+- Are API errors consistent with GUI, CLI, and MCP behavior?
+- Are authorization, audit, provenance, and validation enforced at the service boundary?
+- Are ontology-aligned fields, identifiers, and serialized outputs documented?
+
+### CLI / Pipeline
+
+- Does the capability require a new or changed command, flag, config value, environment variable, container entry point, or batch workflow?
+- Does direct CLI use still work outside the GUI?
+- Does containerized execution still work?
+- Does CPU-only and offline execution still work where applicable?
+- Are stdout, stderr, exit codes, logs, and output files suitable for scripts and forensic workflows?
+- Are generated artifacts consistent with API, GUI, and MCP outputs?
+
+### MCP Server
+
+- Does the capability require a new or changed MCP tool, resource, prompt, schema, or structured output?
+- Is the MCP surface safe for agent use, with bounded inputs, clear descriptions, and predictable outputs?
+- Are tool names, descriptions, arguments, and return objects aligned with Project VIC terminology and ontology mappings?
+- Does the MCP server avoid exposing sensitive evidence, secrets, victim identifiers, or unnecessary case details?
+- Are MCP errors actionable to the agent without leaking protected data?
+- Can an agent discover and use the capability without relying on hidden assumptions?
+
+## Reports, Exports, and Artifacts
+
+For changes affecting reports, exports, generated artifacts, or machine-readable output:
+
+- Keep JSON, CSV, XLSX, JSON-LD, Turtle/RDF, human-readable reports, API responses, CLI outputs, and MCP outputs semantically consistent.
+- Outputs must point back to source media, source records, and the action or process that produced them when used for investigative, evidentiary, audit, or interoperability purposes.
+- Terminology and identifiers must remain aligned with the ontology-alignment rule.
+- Do not allow the GUI report, API response, CLI output, and MCP result to describe materially different facts.
+
+## Spec Kit Requirements
+
+For any feature, fix, refactor, schema change, export change, workflow change, or operator-visible behavior change:
+
+- `/speckit.specify`: identify affected GUI, API, CLI, and MCP surfaces. If a surface is missing, unaffected, or intentionally unnecessary, explain why and whether MVP (`1.0.0`) or `2.0.0` parity is expected.
+- `/speckit.plan`: describe shared service-layer changes, surface adapters, contracts, ontology mappings, validation, authorization, audit, provenance, output consistency, and staged surface rollout.
+- `/speckit.tasks`: create explicit tasks for each affected or required surface. Do not leave surface updates as generic follow-up work.
+- `/speckit.implement`: update all affected surfaces and tests. Do not complete one surface while silently leaving the others stale.
+- `/speckit.analyze`: verify surface parity across code, contracts, schemas, docs, examples, tests, changelog, and deployment guidance, or verify that missing surfaces have documented human-approved exceptions.
+
+## Required Tests
+
+Surface-relevant changes must include focused tests or documented manual verification for:
+
+- Shared service-layer behavior.
+- GUI-visible behavior where practical.
+- API endpoint/schema behavior.
+- CLI command/config/output behavior.
+- MCP tool/resource/schema behavior.
+- Authorization and validation consistency.
+- Audit and provenance consistency.
+- Export/report consistency.
+- Ontology-aligned output consistency.
+- Error behavior across surfaces.
+
+Tests may skip cleanly when platform-specific prerequisites are unavailable, but skipped tests must not hide missing implementation.
+
+## Required Agent Output
+
+For every surface-relevant change, the final agent response must summarize the capability changed, GUI impact, API impact, CLI/pipeline impact, MCP impact, shared service-layer changes, reports/exports/artifacts affected, ontology mappings affected, tests added or updated, documentation updated, and any surfaces intentionally left unchanged, missing until a milestone, or human-designated unnecessary.

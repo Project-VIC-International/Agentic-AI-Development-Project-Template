@@ -1,0 +1,58 @@
+
+# Testing and Quality
+
+Project VIC tests must prove meaningful behavior, failure modes, surface consistency, and regression protection. Compile/build checks are useful, but they are not substitutes for behavioral tests when behavior changes.
+
+For local commands, CI tiers (T0–T3), GitHub Actions conventions, security scanning layers, and human verification checklists, use `testing-program.mdc` and `docs/manual-test-checklist.md`.
+
+For test **data** tiers (T0–T3) and demo/pilot policy, use `docs/test-data-handling.md`.
+
+## Testing Principles
+
+- Test behavior, not implementation details.
+- Cover success, failure, invalid input, missing dependency, permission-denied, unsupported platform, and malformed data paths where applicable.
+- Add regression tests for every fixed bug.
+- **Committed and CI tests** must use Tier T0 public-safe synthetic fixtures (Tier T1 only when redistribution-safe with obviously fake identifiers).
+- **Manual and demo verification** may use T1–T2 per `docs/test-data-handling.md`; record tier honestly; never commit Tier T2+ sample data.
+- Do not encode fake success paths that hide missing implementation.
+- Tests should verify honest actionable failure when prerequisites are unavailable.
+
+## Required Coverage Areas
+
+Surface-changing work should test GUI/API/CLI/MCP behavior where practical.
+
+- GUI: user-visible state, errors, accessibility-relevant behavior, and terminology where practical.
+- API: endpoint behavior, schemas, auth, validation, errors, and OpenAPI/contract expectations.
+- CLI/pipeline: commands, flags, exit codes, stdout/stderr, output files, and batch behavior.
+- MCP: tool schemas, structured outputs, bounded errors, and sensitive-data safety.
+- Reports/exports: deterministic output, schema fixtures, and human/machine-readable consistency.
+
+## Evidence, Security, and Ontology Tests
+
+- Evidence-handling tests must prove source evidence remains read-only.
+- Path/archive tests must reject traversal, absolute paths, escaping links, unsafe permissions, and oversized/decompression-bomb inputs where applicable.
+- Security tests must cover authentication, authorization, secrets handling, redaction, audit events, and permission failures where applicable.
+- Ontology/export tests must validate generated CASE/UCO/CAC/SOLVE-IT output where applicable.
+- Privacy tests must confirm fixtures, logs, screenshots, and outputs use synthetic or redacted data.
+
+## Regression and Quality Gates
+
+- Add tests before or with fixes for user-visible, security, evidence, export, or persistence bugs.
+- Use golden files only for deterministic output and review changes carefully.
+- Integration tests may skip cleanly when GPU, Docker, mounted forensic images, model weights, or other heavy prerequisites are unavailable, but skips must not hide missing implementation.
+- Performance improvements need benchmark/regression protection when claimed.
+- Do not claim completion if required tests are absent without documented manual verification.
+
+## Spec Kit Requirements
+
+For test-relevant work:
+
+- `/speckit.specify`: identify acceptance criteria, failure modes, affected surfaces, data fixtures, and validation needs.
+- `/speckit.plan`: define unit/integration/contract/e2e/manual verification strategy and skip conditions.
+- `/speckit.tasks`: create explicit test tasks tied to files, surfaces, fixtures, docs, and validation commands.
+- `/speckit.implement`: add or update tests alongside behavior.
+- `/speckit.analyze`: verify tests cover requirements, failure modes, contracts, surfaces, and regression risk.
+
+## Required Agent Output
+
+For behavior changes, the final agent response must summarize tests added or updated, failure modes covered, fixtures used, validation commands run, skipped tests and why, manual verification if any, and remaining test gaps.

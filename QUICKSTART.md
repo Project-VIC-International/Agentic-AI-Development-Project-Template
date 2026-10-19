@@ -6,7 +6,7 @@ Use this guide when you have just cloned this template into Cursor and want to b
 
 1. Create a private repository from this template.
 2. Open the private repository in Cursor.
-3. Read `START-HERE-NCCC.md`.
+3. Read `START-HERE.md`.
 4. Paste the prompt in `prompts/START-CURSOR-HERE.md`.
 5. Complete `intake/problem-intake.md`.
 6. Ask Cursor to review the intake and draft a milestone plan.

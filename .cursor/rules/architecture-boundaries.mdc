@@ -1,0 +1,47 @@
+---
+description: Keep Project VIC application logic in shared service layers with clear architecture boundaries
+alwaysApply: true
+---
+
+# Architecture Boundaries
+
+Project VIC applications must keep core behavior in shared, testable service/application layers. GUI, API, CLI/pipeline, and MCP surfaces are adapters over the same capability, not separate implementations.
+
+Architecture changes must preserve security, evidence integrity, ontology alignment, surface equivalence, and no-stubs behavior.
+
+## Layering Requirements
+
+- Business logic belongs in shared service/application layers.
+- GUI/API/CLI/MCP adapters should parse inputs, call shared services, translate outputs, and handle surface-specific presentation only.
+- Do not process evidence directly inside React components, FastAPI route handlers, MCP tool functions, or CLI argument parsing.
+- Keep domain models, DTOs/contracts, persistence, ontology mapping, external-tool invocation, and UI state separate.
+- Surface adapters may vary interaction style, but must not change validation, authorization, provenance, audit, ontology, or error semantics.
+
+## Boundary Rules
+
+- Domain/service code must not import GUI components, route handlers, MCP server code, or CLI parser internals.
+- UI and API code must not bypass shared validation, authorization, audit, provenance, or export services.
+- Persistence code must not mutate source evidence or embed presentation-specific assumptions.
+- External tools such as `ffmpeg`, mounting tools, OCR engines, model runtimes, and validators should be invoked through bounded service wrappers.
+- Ontology mapping and serialization should be centralized enough that GUI/API/CLI/MCP outputs do not drift.
+
+## Architecture Changes
+
+- Do not introduce new architectural patterns, frameworks, queues, databases, service meshes, plugin systems, or deployment topologies without an explicit Spec Kit requirement and plan.
+- Prefer small extensions to existing local patterns over new abstractions.
+- Add abstractions only when they reduce real duplication, isolate risky behavior, or support four-surface equivalence.
+- Document trust boundaries, data flow, source evidence handling, and dependency changes when architecture shifts.
+
+## Spec Kit Requirements
+
+For architecture-relevant work:
+
+- `/speckit.specify`: identify affected capabilities, surfaces, trust boundaries, data flows, and architectural constraints.
+- `/speckit.plan`: describe shared services, adapters, contracts, persistence boundaries, external-tool wrappers, ontology mapping, and test strategy.
+- `/speckit.tasks`: create concrete tasks for shared logic, each affected adapter, tests, docs, and migration notes.
+- `/speckit.implement`: update shared services first where practical, then adapters, without duplicating business logic.
+- `/speckit.analyze`: verify no surface drift, no bypassed controls, no hidden stubs, and no unintended architecture dependency.
+
+## Required Agent Output
+
+For architecture-relevant changes, the final agent response must summarize shared service changes, affected adapters, boundaries preserved or changed, new dependencies or patterns, tests added, and any surfaces intentionally left unchanged.

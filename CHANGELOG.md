@@ -8,12 +8,15 @@ Use this section to record user-facing changes as the project evolves. Move entr
 
 ### Added
 
-- NCCC-focused `START-HERE-NCCC.md` entry point and `prompts/START-CURSOR-HERE.md` bootstrap prompt.
+- Conference-focused `START-HERE.md` entry point and `prompts/START-CURSOR-HERE.md` bootstrap prompt.
 - Course integration guide, beginner `student-mode` Cursor rule, student lab issue template, and NCCC mini-project example.
 - Optional GitHub Codespaces/devcontainer configuration for conference and classroom setup.
 
 ### Changed
 
+- Replaced the local Cursor rules with mandatory policy corpus `0.1.0` at commit `57bfea65f7f97769446d62a3b7cc07ead09d2649`, and installed the Cursor, Claude Code, GitHub Copilot, Gemini CLI, Hermes, OpenCode, Zed, Codex, and Warp adapters.
+- Removed `.cursor/rules/student-mode.mdc` because it is not part of the mandatory corpus.
+- Replaced the NCCC-specific start guide with `START-HERE.md` for a general conference or workshop audience.
 - Elevated the student golden path in `README.md`, `QUICKSTART.md`, and agent guidance so the template is clearly the primary hands-on workspace.
 
 ## [v0.1.0] - 2026-04-25

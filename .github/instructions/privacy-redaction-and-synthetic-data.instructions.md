@@ -1,0 +1,79 @@
+---
+applyTo: "**"
+---
+
+
+# Privacy, Redaction, and Test Data
+
+Project VIC development protects sensitive data by **channel** and **tier**. Follow `docs/test-data-handling.md` as the source of truth.
+
+**Default:** Tier **T0** (public-safe synthetic) for anything committed, in CI, in public issues, in docs/screenshots, and in external AI prompts.
+
+**Not a blanket ban** on realistic or agency-approved data for private manual testing and v0.5.x+ demos when a **test data handling plan** exists and the test record states the tier honestly.
+
+## Non-negotiable prohibitions (all tiers, all channels)
+
+Do not use or distribute:
+
+- CSAM or suspected CSAM content or descriptions
+- Real victim or offender identifiers in **public/shared** artifacts
+- Credentials, API keys, or private certificates in repositories or issues
+- Operationally sensitive hash intelligence or non-public Project VIC data in public examples
+
+## Channel rules (what must stay synthetic or redacted)
+
+These channels are **T0/T1 only** unless an approved plan explicitly allows a specific exception:
+
+- Git commits, PR diffs, and CI logs/artifacts
+- Public or shared GitHub Issues and release notes
+- README, changelog, and committed documentation screenshots
+- External cloud AI prompts and uploads (T2 requires explicit written approval for that workflow)
+- Committed test fixtures and golden files
+
+Use obviously synthetic identifiers in T0/T1 examples (filenames, hashes, people, agencies, case metadata, paths).
+
+## Approved local and demo inputs (T1–T2)
+
+- **T1 realistic synthetic:** structurally faithful data with fake identifiers; may be committed when safe to redistribute.
+- **T2 agency-approved sample:** real or sanitized operational samples for controlled manual testing and law-enforcement demos (~v0.5.x+ typical). Store only under gitignored paths (e.g. `demo-data/local/`). Document via `docs/templates/test-data-handling-plan.md`.
+- Agents must **not** refuse legitimate local testing with T2 when a plan exists; must **not** encourage committing T2 data or pasting it into prohibited channels.
+- Record the tier in manual test execution records; do not mislabel T2 sessions as T0.
+
+## Redaction requirements (product behavior)
+
+When the application processes sensitive data:
+
+- Logs, reports, exports, UI screenshots for **public** docs, and error messages must redact sensitive identifiers by default
+- Prefer correlation IDs, artifact IDs, job IDs, or synthetic references over raw sensitive values where possible
+- Redaction must not destroy required audit/provenance meaning; preserve safe traceability
+- Add tests for redaction behavior; redaction tests may run in T1/T2 private environments while committed fixtures stay T0
+
+## Prohibited content in artifacts
+
+Do not create or commit:
+
+- Real or realistic CSAM descriptions
+- Real victim or offender names, agency case numbers, warrants, or investigative facts in **repo/docs/issues**
+- Real evidence media, thumbnails, or paths in **committed** fixtures
+- Graphic, sensational, exploitative, joking, or gamified sample content
+
+## Tests and review
+
+- **Automated/CI tests:** committed fixtures T0 (T1 only if redistribution-safe and identifier-safe)
+- **Manual/demo:** T0–T2 per `docs/test-data-handling.md` and milestone maturity
+- Review screenshots and fixtures before commit; use T0 for anything landing in git
+- Do not use production logs or evidence-derived artifacts as **committed** test fixtures
+
+## Spec Kit Requirements
+
+For privacy-relevant work:
+
+- `/speckit.specify`: protected data categories, test data tier targets by milestone, redaction needs, channel constraints
+- `/speckit.plan`: T0 fixture strategy; T2 demo plan if v0.5.x+; redaction and audit tests
+- `/speckit.tasks`: fixtures, gitignore paths, handling plan, redaction tests, docs
+- `/speckit.implement`: T0 in repo/CI; never commit T2; implement redaction at boundaries
+- `/speckit.analyze`: verify no prohibited content in committed artifacts; handling plan present if T2 claimed
+
+## Required Agent Output
+
+For privacy-relevant changes, summarize protected data, **test data tier** used or planned, channels affected, redaction behavior, committed vs local-only data, handling plan link if T2+, and limitations.

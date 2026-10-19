@@ -21,7 +21,7 @@ The Project VIC course teaches the method. This template is the student workspac
 | Course concept | Course location | Template location | Student action |
 | --- | --- | --- | --- |
 | Environment setup | `part-2-lab/exercises/00-environment-setup/` | `QUICKSTART.md`, `docs/tooling-setup.md`, `scripts/`, `.devcontainer/devcontainer.json` | Verify tools, run a setup script, or use Codespaces |
-| First Cursor conversation | `part-2-lab/exercises/02-cursor-first-steps/` | `START-HERE-NCCC.md`, `prompts/START-CURSOR-HERE.md` | Ask the agent to explain the template before editing |
+| First Cursor conversation | `part-2-lab/exercises/02-cursor-first-steps/` | `START-HERE.md`, `prompts/START-CURSOR-HERE.md` | Ask the agent to explain the template before editing |
 | Spec-driven development | `part-2-lab/exercises/03-spec-driven-dev/` | `docs/spec-kit-workflow.md`, `.cursor/rules/speckit-workflow.mdc` | Use `specify -> plan -> tasks -> implement -> analyze` |
 | CASE/UCO/CAC alignment | `part-2-lab/exercises/04-case-uco-introduction/`, `part-2-lab/exercises/05-cac-ontology-modeling/` | `docs/case-uco-cac-guidance.md`, `.cursor/rules/ontology-alignment.mdc` | Reuse ontology concepts where practical |
 | Prototype build | `part-2-lab/exercises/06-build-a-prototype/` | `intake/`, `planning/`, `.github/ISSUE_TEMPLATE/`, `examples/` | Build one reviewed issue at a time with synthetic data |

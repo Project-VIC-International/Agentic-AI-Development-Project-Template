@@ -1,0 +1,54 @@
+---
+applyTo: "**"
+---
+
+
+# MCP and Agent Safety
+
+Project VIC MCP servers, tools, resources, and prompts must be safe for agent use, bounded in scope, ontology-grounded where applicable, and discoverable without hidden assumptions.
+
+MCP is a first-class surface, but it must not become a path for leaking evidence, secrets, victim identifiers, sensitive case details, or non-public operational information.
+
+## Tool Design
+
+- Tool names must be stable, action-oriented, specific, and consistent with Project VIC terminology.
+- Tool descriptions must state what the tool does, required inputs, side effects, limits, and safe failure behavior without exaggerating capability.
+- Inputs must be bounded with explicit schemas, types, size limits, path constraints, enum values, and validation.
+- Outputs should be structured objects, not prose-only blobs.
+- Return ontology-aligned identifiers, provenance references, validation status, and actionable errors where applicable.
+- Do not expose raw sensitive evidence unless explicitly approved by repository documentation and deployment context.
+
+## Safety Boundaries
+
+- MCP tools must call shared service layers rather than reimplementing business logic.
+- Tools must enforce the same validation, authorization, audit, provenance, and no-stubs behavior as GUI/API/CLI surfaces.
+- Tools must not perform destructive actions without explicit confirmation patterns.
+- Risky operations should support dry-run or preview mode where practical.
+- Tools must not silently mutate source evidence, operator-selected source directories, or original media.
+- MCP resources/prompts/tools must not leak secrets, case details, victim identifiers, unnecessary evidence paths, or sensitive hash intelligence.
+
+## Agent-Usable Errors
+
+- Errors must be structured, safe, and specific enough for an agent to recover or report the issue.
+- Do not include protected data in error messages.
+- Missing dependencies, invalid inputs, unsupported configurations, and permission failures must return honest actionable errors, not fake success.
+
+## Prompts and Resources
+
+- Prompts must use benign synthetic examples and trauma-aware language.
+- Resources should expose documentation, schemas, capabilities, and safe metadata rather than sensitive case content.
+- MCP schemas and examples must stay aligned with API, CLI, GUI terminology, ontology mappings, and data-contract rules.
+
+## Spec Kit Requirements
+
+For MCP-relevant work:
+
+- `/speckit.specify`: identify agent users, tool/resource/prompt purpose, protected data, side effects, and affected surfaces.
+- `/speckit.plan`: define schemas, validation, authorization, audit/provenance, ontology mapping, dry-run/confirmation behavior, and error structure.
+- `/speckit.tasks`: create tasks for shared service logic, MCP adapter, tests, docs, schemas, and examples.
+- `/speckit.implement`: implement real tool behavior through shared services with bounded inputs and structured outputs.
+- `/speckit.analyze`: verify safety, discoverability, no sensitive leakage, and surface equivalence.
+
+## Required Agent Output
+
+For MCP changes, the final agent response must summarize tools/resources/prompts changed, inputs/outputs, side effects, protected data exposure, safety controls, ontology alignment, tests, docs, and any human-review requirements.

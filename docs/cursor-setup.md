@@ -1,6 +1,6 @@
 # Cursor Setup
 
-Cursor is the agentic AI development environment used with this template. If you give this template repository to Claude Code, OpenCode, Google Antigravity or other future agentic AI development tool it can adapt what it needs from this repository.
+Cursor is the agentic AI development environment used with this template. The same mandatory policies are also installed for Claude Code, GitHub Copilot, Gemini CLI, Hermes, OpenCode, Zed, Codex, and Warp. See `docs/mandatory-policy-corpus.md`.
 
 ## Open the Repository
 
@@ -12,7 +12,7 @@ Cursor is the agentic AI development environment used with this template. If you
 ## Recommended First Prompt
 
 ```text
-Read README.md, QUICKSTART.md, SECURITY.md, the files in docs/, and the rules in .cursor/rules/. Then explain how I should use this template for my project. Do not make changes yet.
+Read README.md, QUICKSTART.md, SECURITY.md, docs/mandatory-policy-corpus.md, the files in docs/, and the rules in .cursor/rules/. Then explain how I should use this template for my project. Do not make changes yet.
 ```
 
 ## GitHub Permissions
